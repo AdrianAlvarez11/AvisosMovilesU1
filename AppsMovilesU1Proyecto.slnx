@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AvisosAPI/AvisosAPI.csproj" />
+  <Project Path="AvisosApp/AvisosApp.csproj" Id="7038b9da-bf98-4074-9063-491522ff8e2b" />
+</Solution>
