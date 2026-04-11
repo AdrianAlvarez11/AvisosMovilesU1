@@ -23,6 +23,9 @@ builder.Services.AddHttpContextAccessor();  // necesario para leer claims en ser
 
 builder.Services.AddScoped<RegistroService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<AvisosPersonalesService>();
+builder.Services.AddScoped<AvisosGeneralesService>();
+builder.Services.AddScoped<GruposService>();
 
 
 var jwtKey = builder.Configuration["Jwt:Key"]!;
@@ -35,9 +38,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtKey)),
-
-            // Para una API interna simple no necesitamos validar
-            // emisor ni audiencia, así que los desactivamos.
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -53,7 +53,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-// Importante: Authentication antes que Authorization, y ambos antes de MapControllers.
 app.UseAuthentication();
 app.UseAuthorization();
 
