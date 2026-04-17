@@ -18,6 +18,8 @@ public partial class AvisosEscolaresContext : DbContext
 
     public virtual DbSet<Alumno> Alumno { get; set; }
 
+    public virtual DbSet<Alumnoavisogeneral> Alumnoavisogeneral { get; set; }
+
     public virtual DbSet<Avisogeneral> Avisogeneral { get; set; }
 
     public virtual DbSet<Avisopersonal> Avisopersonal { get; set; }
@@ -56,6 +58,37 @@ public partial class AvisosEscolaresContext : DbContext
                 .HasForeignKey(d => d.IdGrupo)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Alumno_Grupo");
+        });
+
+        modelBuilder.Entity<Alumnoavisogeneral>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("alumnoavisogeneral");
+
+            entity.HasIndex(e => e.IdAlumno, "FK_AlumnoAvisoGeneral_Alumno");
+
+            entity.HasIndex(e => e.IdAvisoGeneral, "FK_AlumnoAvisoGeneral_Aviso");
+
+            entity.HasIndex(e => e.IdEstado, "FK_AlumnoAvisoGeneral_Estado");
+
+            entity.Property(e => e.FechaLeido).HasColumnType("datetime");
+            entity.Property(e => e.IdEstado).HasDefaultValueSql("'1'");
+
+            entity.HasOne(d => d.IdAlumnoNavigation).WithMany(p => p.Alumnoavisogeneral)
+                .HasForeignKey(d => d.IdAlumno)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AlumnoAvisoGeneral_Alumno");
+
+            entity.HasOne(d => d.IdAvisoGeneralNavigation).WithMany(p => p.Alumnoavisogeneral)
+                .HasForeignKey(d => d.IdAvisoGeneral)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AlumnoAvisoGeneral_Aviso");
+
+            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Alumnoavisogeneral)
+                .HasForeignKey(d => d.IdEstado)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AlumnoAvisoGeneral_Estado");
         });
 
         modelBuilder.Entity<Avisogeneral>(entity =>
