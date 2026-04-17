@@ -102,5 +102,28 @@ namespace AvisosAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{idAviso}")]
+        [Authorize(Roles = "Maestro")]
+        public IActionResult Delete(int idAviso)
+        {
+            try
+            {
+                service.Eliminar(idAviso);
+                return Ok("Aviso eliminado correctamente.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

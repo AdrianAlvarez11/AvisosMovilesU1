@@ -58,7 +58,7 @@ namespace AvisosAPI.Services
                     .ThenInclude(x => x.IdMaestroNavigation)
                 .Include(x => x.Avisopersonal)
                     .ThenInclude(x => x.IdEstadoNavigation)
-                .FirstOrDefault(x => x.Id == idAlumno && x.IdGrupo == grupo.Id);
+                .FirstOrDefault(x => x.Id == idAlumno && x.IdGrupo == grupo.Id && x.Eliminado == false);
 
             if (alumno == null)
                 throw new KeyNotFoundException("Alumno no encontrado.");
@@ -66,6 +66,20 @@ namespace AvisosAPI.Services
             return mapper.Map<AlumnoDetalleDTO>(alumno);
         }
 
+        public void EliminarAlumno(int idAlumno)
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var alumno = alumnoRepository.Query()
+                .FirstOrDefault(x => x.Id == idAlumno
+                                  && x.Eliminado == false);
+
+            if (alumno == null)
+                throw new KeyNotFoundException("Alumno no encontrado.");
+
+            alumno.Eliminado = true;
+            alumnoRepository.Update(alumno);
+        }
         private int ObtenerIdDesdeToken()
         {
             var idStr = httpContextAccessor.HttpContext?

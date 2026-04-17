@@ -17,8 +17,6 @@ namespace AvisosAPI.Controllers
             this.service = service;
         }
 
-        // GET api/avisosgenerales
-        // Alumno: lista de avisos vigentes
         [HttpGet]
         [Authorize(Roles = "Alumno")]
         public IActionResult Get()
@@ -38,8 +36,6 @@ namespace AvisosAPI.Controllers
             }
         }
 
-        // GET api/avisosgenerales/5
-        // Alumno: detalle de un aviso vigente
         [HttpGet("{idAviso}")]
         [Authorize(Roles = "Alumno")]
         public IActionResult GetDetalle(int idAviso)
@@ -63,8 +59,6 @@ namespace AvisosAPI.Controllers
             }
         }
 
-        // POST api/avisosgenerales
-        // Maestro: publica un aviso general
         [HttpPost]
         [Authorize(Roles = "Maestro")]
         public IActionResult Post(AvisoGeneralCreateDTO dto)
@@ -87,6 +81,28 @@ namespace AvisosAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{idAviso}")]
+        [Authorize(Roles = "Maestro")]
+        public IActionResult Delete(int idAviso)
+        {
+            try
+            {
+                service.Eliminar(idAviso);
+                return Ok("Aviso eliminado correctamente.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
-

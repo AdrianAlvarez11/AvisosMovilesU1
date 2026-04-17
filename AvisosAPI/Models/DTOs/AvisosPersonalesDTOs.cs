@@ -19,7 +19,7 @@
         public string Contenido { get; set; } = null!;
         public string NombreMaestro { get; set; } = null!;
         public DateTime FechaEnviado { get; set; }
-        public DateTime? FechaLeido { get; set; }   // nullable igual que en tu BD
+        public DateTime? FechaLeido { get; set; }   
         public int IdEstado { get; set; }
         public string NombreEstado { get; set; } = null!;
     }

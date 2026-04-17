@@ -5,18 +5,20 @@ using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
 namespace AvisosAPI.Models.Entities;
 
-public partial class AvisosEscolaresContext : DbContext
+public partial class AvisosescolaresContext : DbContext
 {
-    public AvisosEscolaresContext()
+    public AvisosescolaresContext()
     {
     }
 
-    public AvisosEscolaresContext(DbContextOptions<AvisosEscolaresContext> options)
+    public AvisosescolaresContext(DbContextOptions<AvisosescolaresContext> options)
         : base(options)
     {
     }
 
     public virtual DbSet<Alumno> Alumno { get; set; }
+
+    public virtual DbSet<Alumnoavisogeneral> Alumnoavisogeneral { get; set; }
 
     public virtual DbSet<Avisogeneral> Avisogeneral { get; set; }
 
@@ -27,6 +29,10 @@ public partial class AvisosEscolaresContext : DbContext
     public virtual DbSet<Grupo> Grupo { get; set; }
 
     public virtual DbSet<Maestro> Maestro { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySql("server=localhost;user=root;password=root;database=avisosescolares", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.45-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,6 +58,37 @@ public partial class AvisosEscolaresContext : DbContext
                 .HasForeignKey(d => d.IdGrupo)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Alumno_Grupo");
+        });
+
+        modelBuilder.Entity<Alumnoavisogeneral>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("alumnoavisogeneral");
+
+            entity.HasIndex(e => e.IdAlumno, "FK_AlumnoAvisoGeneral_Alumno");
+
+            entity.HasIndex(e => e.IdAvisoGeneral, "FK_AlumnoAvisoGeneral_Aviso");
+
+            entity.HasIndex(e => e.IdEstado, "FK_AlumnoAvisoGeneral_Estado");
+
+            entity.Property(e => e.FechaLeido).HasColumnType("datetime");
+            entity.Property(e => e.IdEstado).HasDefaultValueSql("'1'");
+
+            entity.HasOne(d => d.IdAlumnoNavigation).WithMany(p => p.Alumnoavisogeneral)
+                .HasForeignKey(d => d.IdAlumno)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AlumnoAvisoGeneral_Alumno");
+
+            entity.HasOne(d => d.IdAvisoGeneralNavigation).WithMany(p => p.Alumnoavisogeneral)
+                .HasForeignKey(d => d.IdAvisoGeneral)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AlumnoAvisoGeneral_Aviso");
+
+            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Alumnoavisogeneral)
+                .HasForeignKey(d => d.IdEstado)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AlumnoAvisoGeneral_Estado");
         });
 
         modelBuilder.Entity<Avisogeneral>(entity =>

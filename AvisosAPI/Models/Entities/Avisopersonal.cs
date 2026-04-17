@@ -21,6 +21,8 @@ public partial class Avisopersonal
 
     public int IdEstado { get; set; }
 
+    public bool? Eliminado { get; set; }
+
     public virtual Alumno IdAlumnoNavigation { get; set; } = null!;
 
     public virtual Estadoaviso IdEstadoNavigation { get; set; } = null!;

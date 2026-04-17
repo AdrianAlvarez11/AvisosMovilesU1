@@ -9,5 +9,7 @@ public partial class Estadoaviso
 
     public string Nombre { get; set; } = null!;
 
+    public virtual ICollection<Alumnoavisogeneral> Alumnoavisogeneral { get; set; } = new List<Alumnoavisogeneral>();
+
     public virtual ICollection<Avisopersonal> Avisopersonal { get; set; } = new List<Avisopersonal>();
 }

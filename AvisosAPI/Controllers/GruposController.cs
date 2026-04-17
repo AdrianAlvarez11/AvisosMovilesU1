@@ -62,5 +62,27 @@ namespace AvisosAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{idAlumno}")]
+        public IActionResult Delete(int idAlumno)
+        {
+            try
+            {
+                service.EliminarAlumno(idAlumno);
+                return Ok("Alumno eliminado correctamente.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

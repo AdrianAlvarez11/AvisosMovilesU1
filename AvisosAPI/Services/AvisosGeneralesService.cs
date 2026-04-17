@@ -22,23 +22,26 @@ namespace AvisosAPI.Services
             this.httpContextAccessor = httpContextAccessor;
         }
 
+
         public List<AvisoGeneralResumenDTO> GetVigentes()
         {
             var avisos = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
-                .Where(x => x.FechaExpira > DateTime.Now)
+                .Where(x => x.FechaExpira > DateTime.Now && x.Eliminado == false)
                 .OrderByDescending(x => x.FechaEnviado)
                 .ToList();
 
             return avisos.Select(x => mapper.Map<AvisoGeneralResumenDTO>(x)).ToList();
         }
 
-        // Un alumno no debería poder abrir un aviso expirado aunque conozca su Id.
+
         public AvisoGeneralDetalleDTO GetDetalle(int idAviso)
         {
             var aviso = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
-                .FirstOrDefault(x => x.Id == idAviso && x.FechaExpira > DateTime.Now);
+                .FirstOrDefault(x => x.Id == idAviso
+                                  && x.FechaExpira > DateTime.Now
+                                  && x.Eliminado == false);
 
             if (aviso == null)
                 throw new KeyNotFoundException("Aviso no encontrado o no vigente.");
@@ -57,8 +60,27 @@ namespace AvisosAPI.Services
             var aviso = mapper.Map<Avisogeneral>(dto);
             aviso.IdMaestro = idMaestro;
             aviso.FechaEnviado = DateTime.Now;
+            aviso.Eliminado = false;
 
             avisoRepository.Insert(aviso);
+        }
+
+
+        // Verifica que el aviso pertenezca al maestro del token.
+        public void Eliminar(int idAviso)
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var aviso = avisoRepository.Query()
+                .FirstOrDefault(x => x.Id == idAviso
+                                  && x.IdMaestro == idMaestro
+                                  && x.Eliminado == false);
+
+            if (aviso == null)
+                throw new KeyNotFoundException("Aviso no encontrado.");
+
+            aviso.Eliminado = true;
+            avisoRepository.Update(aviso);
         }
 
         private int ObtenerIdDesdeToken()

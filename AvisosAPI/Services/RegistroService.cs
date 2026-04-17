@@ -88,6 +88,7 @@ namespace AvisosAPI.Services
             var alumno = mapper.Map<Alumno>(dto);
             alumno.Contrasena = EncriptacionHelper.ComputeSHA512HashWithSalt(dto.Contrasena);
             alumno.IdGrupo = grupo.Id;
+            alumno.Eliminado = false;
 
             alumnoRepository.Insert(alumno);
         }

@@ -22,8 +22,7 @@ namespace AvisosAPI.Services
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        // ── Alumno: obtener lista de sus avisos ──────────────────────
-        // Se usa en la pantalla principal del alumno.
+        // la pantalla principal del alumno.
         // Incluimos navegaciones para que el mapper pueda leer
         // NombreMaestro y NombreEstado.
         public List<AvisoPersonalResumenDTO> GetAvisosAlumno()
@@ -33,7 +32,7 @@ namespace AvisosAPI.Services
             var avisos = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
                 .Include(x => x.IdEstadoNavigation)
-                .Where(x => x.IdAlumno == idAlumno)
+                .Where(x => x.IdAlumno == idAlumno && x.Eliminado == false)
                 .OrderByDescending(x => x.FechaEnviado)
                 .ToList();
 
@@ -50,7 +49,7 @@ namespace AvisosAPI.Services
             var aviso = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
                 .Include(x => x.IdEstadoNavigation)
-                .FirstOrDefault(x => x.Id == idAviso && x.IdAlumno == idAlumno);
+                .FirstOrDefault(x => x.Id == idAviso && x.IdAlumno == idAlumno && x.Eliminado == false);
 
             if (aviso == null)
                 throw new KeyNotFoundException("Aviso no encontrado.");
@@ -74,6 +73,7 @@ namespace AvisosAPI.Services
             aviso.IdMaestro = idMaestro;
             aviso.FechaEnviado = DateTime.Now;
             aviso.IdEstado = 1; // Nuevo
+            aviso.Eliminado = false;
 
             avisoRepository.Insert(aviso);
         }
@@ -84,11 +84,27 @@ namespace AvisosAPI.Services
             var avisos = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
                 .Include(x => x.IdEstadoNavigation)
-                .Where(x => x.IdAlumno == idAlumno)
+                .Where(x => x.IdAlumno == idAlumno && x.Eliminado == false)
                 .OrderByDescending(x => x.FechaEnviado)
                 .ToList();
 
             return avisos.Select(x => mapper.Map<AvisoPersonalResumenDTO>(x)).ToList();
+        }
+
+        public void Eliminar(int idAviso)
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var aviso = avisoRepository.Query()
+                .FirstOrDefault(x => x.Id == idAviso
+                                  && x.IdMaestro == idMaestro
+                                  && x.Eliminado == false);
+
+            if (aviso == null)
+                throw new KeyNotFoundException("Aviso no encontrado.");
+
+            aviso.Eliminado = true;
+            avisoRepository.Update(aviso);
         }
 
         private int ObtenerIdDesdeToken()

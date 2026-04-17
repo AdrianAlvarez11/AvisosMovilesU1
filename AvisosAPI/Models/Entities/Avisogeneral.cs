@@ -17,5 +17,9 @@ public partial class Avisogeneral
 
     public DateTime FechaExpira { get; set; }
 
+    public bool Eliminado { get; set; }
+
+    public virtual ICollection<Alumnoavisogeneral> Alumnoavisogeneral { get; set; } = new List<Alumnoavisogeneral>();
+
     public virtual Maestro IdMaestroNavigation { get; set; } = null!;
 }
