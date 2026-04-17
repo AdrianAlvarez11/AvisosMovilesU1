@@ -36,13 +36,37 @@ namespace AvisosAPI.Controllers
             }
         }
 
-        [HttpGet("{idAviso}")]
+
+        [HttpGet("alumno/{idAviso}")]
         [Authorize(Roles = "Alumno")]
-        public IActionResult GetDetalle(int idAviso)
+        public IActionResult GetDetalleAlumno(int idAviso)
         {
             try
             {
-                var aviso = service.GetDetalle(idAviso);
+                var aviso = service.GetDetalleAlumno(idAviso);
+                return Ok(aviso);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("maestro/{idAviso}")]
+        [Authorize(Roles = "Maestro")]
+        public IActionResult GetDetalleMaestro(int idAviso)
+        {
+            try
+            {
+                var aviso = service.GetDetalleMaestro(idAviso);
                 return Ok(aviso);
             }
             catch (UnauthorizedAccessException ex)

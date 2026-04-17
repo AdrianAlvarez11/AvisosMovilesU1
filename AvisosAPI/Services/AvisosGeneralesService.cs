@@ -11,18 +11,24 @@ namespace AvisosAPI.Services
         private readonly Repository<Avisogeneral> avisoRepository;
         private readonly IMapper mapper;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly Repository<Alumnoavisogeneral> alumnoAvisoRepository;
+        private readonly Repository<Alumno> alumnoRepository;
 
         public AvisosGeneralesService(
             Repository<Avisogeneral> avisoRepository,
             IMapper mapper,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            Repository<Alumnoavisogeneral> alumnoAvisoRepository,
+            Repository<Alumno> alumnoRepository)
         {
             this.avisoRepository = avisoRepository;
             this.mapper = mapper;
             this.httpContextAccessor = httpContextAccessor;
+            this.alumnoAvisoRepository = alumnoAvisoRepository;
+            this.alumnoRepository = alumnoRepository;
         }
 
-
+        //lista de resumen para alumno
         public List<AvisoGeneralResumenDTO> GetVigentes()
         {
             var avisos = avisoRepository.Query()
@@ -35,8 +41,11 @@ namespace AvisosAPI.Services
         }
 
 
-        public AvisoGeneralDetalleDTO GetDetalle(int idAviso)
+        // ver detalle y registrar lectura (alumno)
+        public AvisoGeneralDetalleAlumnoDTO GetDetalleAlumno(int idAviso)
         {
+            var idAlumno = ObtenerIdDesdeToken();
+
             var aviso = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
                 .FirstOrDefault(x => x.Id == idAviso
@@ -46,8 +55,72 @@ namespace AvisosAPI.Services
             if (aviso == null)
                 throw new KeyNotFoundException("Aviso no encontrado o no vigente.");
 
-            return mapper.Map<AvisoGeneralDetalleDTO>(aviso);
+            // Buscar si ya existe un registro de lectura para este alumno
+            var lectura = alumnoAvisoRepository.Query()
+                .FirstOrDefault(x => x.IdAvisoGeneral == idAviso
+                                  && x.IdAlumno == idAlumno);
+
+            if (lectura == null)
+            {
+                // Primera vez que el alumno abre este aviso, no deberia pero por si acaso
+
+                alumnoAvisoRepository.Insert(new Alumnoavisogeneral
+                {
+                    IdAlumno = idAlumno,
+                    IdAvisoGeneral = idAviso,
+                    IdEstado = 3,           // Leído
+                    FechaLeido = DateTime.Now
+                });
+            }
+            else if (lectura.FechaLeido == null)
+            {
+                lectura.FechaLeido = DateTime.Now;
+                lectura.IdEstado = 3; // Leído
+                alumnoAvisoRepository.Update(lectura);
+            }
+
+            return mapper.Map<AvisoGeneralDetalleAlumnoDTO>(aviso);
         }
+
+        //  ver detalle con listas de lectura
+        // Muestra los datos del aviso y separa los alumnos del grupo
+        // en dos listas según si ya lo leyeron o no.
+        public AvisoGeneralDetalleMaestroDTO GetDetalleMaestro(int idAviso)
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var aviso = avisoRepository.Query()
+                .Include(x => x.IdMaestroNavigation)
+                .FirstOrDefault(x => x.Id == idAviso
+                                  && x.IdMaestro == idMaestro
+                                  && x.Eliminado == false);
+
+            if (aviso == null)
+                throw new KeyNotFoundException("Aviso no encontrado.");
+
+            // Obtener todos los registros de lectura de este aviso
+            // incluyendo la navegación al alumno para construir AlumnoLecturaDTO
+            var lecturas = alumnoAvisoRepository.Query()
+                .Include(x => x.IdAlumnoNavigation)
+                .Where(x => x.IdAvisoGeneral == idAviso)
+                .ToList();
+
+            var resultado = mapper.Map<AvisoGeneralDetalleMaestroDTO>(aviso);
+
+            // Separar en dos listas según el estado
+            resultado.PendientesLectura = lecturas
+                .Where(x => x.IdEstado == 1 || x.IdEstado == 2)
+                .Select(x => mapper.Map<AlumnoLecturaDTO>(x))
+                .ToList();
+
+            resultado.Leidos = lecturas
+                .Where(x => x.IdEstado == 3)
+                .Select(x => mapper.Map<AlumnoLecturaDTO>(x))
+                .ToList();
+
+            return resultado;
+        }
+
 
 
         public void Crear(AvisoGeneralCreateDTO dto)
@@ -61,6 +134,18 @@ namespace AvisosAPI.Services
             aviso.IdMaestro = idMaestro;
             aviso.FechaEnviado = DateTime.Now;
             aviso.Eliminado = false;
+
+            foreach (var alumno in alumnoRepository.GetAll().Where(x=>x.Eliminado==false))
+            {
+                var alumnoAviso = new Alumnoavisogeneral
+                {
+                    IdAlumno = alumno.Id,
+                    IdAvisoGeneral = aviso.Id,
+                    IdEstado= 1 // Nuevo
+                    
+                };
+                alumnoAvisoRepository.Insert(alumnoAviso);
+            }
 
             avisoRepository.Insert(aviso);
         }
