@@ -1,5 +1,6 @@
 ﻿using AvisosAPI.Models.DTOs;
 using AvisosAPI.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static AvisosAPI.Models.DTOs.RegistroDTOs;
@@ -11,16 +12,23 @@ namespace AvisosAPI.Controllers
     public class RegistroController : ControllerBase
     {
         private readonly RegistroService service;
+        private readonly IValidator<MaestroRegistroDTO> maestroValidator;
+        private readonly IValidator<AlumnoRegistroDTO> alumnoValidator;
 
-        public RegistroController(RegistroService service)
+        public RegistroController(RegistroService service, IValidator<MaestroRegistroDTO> maestroValidator, IValidator<AlumnoRegistroDTO> alumnoValidator)
         {
             this.service = service;
+            this.maestroValidator = maestroValidator;
+            this.alumnoValidator = alumnoValidator;
         }
 
         [HttpPost("maestro")]
         [AllowAnonymous]
         public IActionResult RegistrarMaestro(MaestroRegistroDTO dto)
         {
+            var result = maestroValidator.Validate(dto);
+            if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
+
             try
             {
                 service.RegistrarMaestro(dto);
@@ -40,6 +48,9 @@ namespace AvisosAPI.Controllers
         [Authorize(Roles = "Maestro")]
         public IActionResult RegistrarAlumno(AlumnoRegistroDTO dto)
         {
+            var result = alumnoValidator.Validate(dto);
+            if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
+
             try
             {
                 service.RegistrarAlumno(dto);

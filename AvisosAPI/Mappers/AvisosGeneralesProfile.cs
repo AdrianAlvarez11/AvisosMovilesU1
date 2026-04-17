@@ -8,18 +8,22 @@ namespace AvisosAPI.Mappers
     {
         public AvisosGeneralesProfile()
         {
-            CreateMap<Avisogeneral, AvisoGeneralResumenDTO>()
-                .ForMember(dest => dest.NombreMaestro,
-                    opt => opt.MapFrom(src => src.IdMaestroNavigation.Nombre));
+            CreateMap<Alumnoavisogeneral, AvisoGeneralResumenDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdAvisoGeneralNavigation.Id))
+                .ForMember(dest => dest.Titulo, opt => opt.MapFrom(src => src.IdAvisoGeneralNavigation.Titulo))
+                .ForMember(dest => dest.NombreMaestro, opt => opt.MapFrom(src => src.IdAvisoGeneralNavigation.IdMaestroNavigation.Nombre))
+                .ForMember(dest => dest.FechaEnviado, opt => opt.MapFrom(src => src.IdAvisoGeneralNavigation.FechaEnviado))
+                .ForMember(dest => dest.FechaExpira, opt => opt.MapFrom(src => src.IdAvisoGeneralNavigation.FechaExpira))
+                .ForMember(dest => dest.IdEstado, opt => opt.MapFrom(src => src.IdEstado))
+                .ForMember(dest => dest.NombreEstado, opt => opt.MapFrom(src => src.IdEstadoNavigation.Nombre));
 
-            // Detalle alumno — igual que antes, solo cambia el nombre del DTO
+      
             CreateMap<Avisogeneral, AvisoGeneralDetalleAlumnoDTO>()
                 .ForMember(dest => dest.NombreMaestro,
                     opt => opt.MapFrom(src => src.IdMaestroNavigation.Nombre));
 
-            // Detalle maestro — las listas las construye el servicio manualmente
-            // porque requieren filtrar por IdEstado, algo que AutoMapper
-            // no puede hacer solo. Por eso las ignoramos aquí.
+            // Detalle maestro. las listas las construye el servicio manualmente
+            // porque requieren filtrar por IdEstado, por eso las ignoramos aquí
             CreateMap<Avisogeneral, AvisoGeneralDetalleMaestroDTO>()
                 .ForMember(dest => dest.NombreMaestro,
                     opt => opt.MapFrom(src => src.IdMaestroNavigation.Nombre))
@@ -28,7 +32,7 @@ namespace AvisosAPI.Mappers
                 .ForMember(dest => dest.PendientesLectura, opt => opt.Ignore())
                 .ForMember(dest => dest.Leidos, opt => opt.Ignore());
                 
-
+    
             CreateMap<Alumnoavisogeneral, AlumnoLecturaDTO>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.IdAlumnoNavigation.Id))

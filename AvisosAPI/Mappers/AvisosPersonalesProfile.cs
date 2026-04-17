@@ -26,7 +26,7 @@ namespace AvisosAPI.Mappers
                     opt => opt.MapFrom(src => src.IdEstadoNavigation.Nombre));
 
             // DTO Create -> Entidad (cuando el maestro crea un aviso)
-            // IdMaestro, FechaEnviado e IdEstado NO vienen del DTO —
+            // IdMaestro, FechaEnviado e IdEstado NO vienen del DTO 
             // los asigna el servicio manualmente antes de guardar.
             CreateMap<AvisoPersonalCreateDTO, Avisopersonal>();
         }

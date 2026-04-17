@@ -32,16 +32,6 @@ namespace AvisosAPI.Services
 
         public void RegistrarMaestro(MaestroRegistroDTO dto)
         {
-            // Verificar que el NumControl no esté ya registrado
-            var existe = maestroRepository.Query()
-                .Any(x => x.NumControl == dto.NumControl);
-
-            if (existe)
-                throw new InvalidOperationException("El número de control ya está registrado.");
-
-            if (!Regex.IsMatch(dto.NumControl, @"^[0-9]{4}$"))
-                throw new InvalidOperationException("El número de control no tiene un formato válido.");
-
             var maestro = mapper.Map<Maestro>(dto);
             maestro.Contrasena = EncriptacionHelper.ComputeSHA512HashWithSalt(dto.Contrasena);
 
@@ -75,15 +65,6 @@ namespace AvisosAPI.Services
 
             if (grupo == null)
                 throw new KeyNotFoundException("No se encontró un grupo asociado al maestro.");
-
-            if (!Regex.IsMatch(dto.NumControl.ToUpper(), @"^[0-9]{2}1[AGDTPMQV][ED0-9][0-9]{3}$"))
-                throw new InvalidOperationException("El número de control no tiene un formato válido.");
-
-            var existe = alumnoRepository.Query()
-                .Any(x => x.NumControl == dto.NumControl);
-
-            if (existe)
-                throw new InvalidOperationException("El número de control ya está registrado.");
 
             var alumno = mapper.Map<Alumno>(dto);
             alumno.Contrasena = EncriptacionHelper.ComputeSHA512HashWithSalt(dto.Contrasena);

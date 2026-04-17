@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ builder.Services.AddScoped<AvisosPersonalesService>();
 builder.Services.AddScoped<AvisosGeneralesService>();
 builder.Services.AddScoped<GruposService>();
 
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var jwtKey = builder.Configuration["Jwt:Key"]!;
 

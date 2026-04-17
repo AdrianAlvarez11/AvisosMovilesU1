@@ -8,6 +8,9 @@
         public string NombreMaestro { get; set; } = null!;
         public DateTime FechaEnviado { get; set; }
         public DateTime FechaExpira { get; set; }
+        public int IdEstado { get; set; }
+        public string NombreEstado { get; set; } = null!;
+
     }
 
     // Detalle para el alumno 

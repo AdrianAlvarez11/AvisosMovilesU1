@@ -1,5 +1,6 @@
 ﻿using AvisosAPI.Models.DTOs;
 using AvisosAPI.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace AvisosAPI.Controllers
     public class AvisosGeneralesController : ControllerBase
     {
         private readonly AvisosGeneralesService service;
+        private readonly IValidator<AvisoGeneralCreateDTO> validator;
 
-        public AvisosGeneralesController(AvisosGeneralesService service)
+        public AvisosGeneralesController(AvisosGeneralesService service, IValidator<AvisoGeneralCreateDTO> validator)
         {
             this.service = service;
+            this.validator = validator;
         }
 
         [HttpGet]
@@ -87,6 +90,9 @@ namespace AvisosAPI.Controllers
         [Authorize(Roles = "Maestro")]
         public IActionResult Post(AvisoGeneralCreateDTO dto)
         {
+            var result = validator.Validate(dto);
+            if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
+
             try
             {
                 service.Crear(dto);

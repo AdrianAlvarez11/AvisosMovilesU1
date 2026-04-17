@@ -1,5 +1,6 @@
 ﻿using AvisosAPI.Models.DTOs;
 using AvisosAPI.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using static AvisosAPI.Models.DTOs.AuthDTOs;
 
@@ -10,15 +11,22 @@ namespace AvisosAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthService service;
+        private readonly IValidator<AlumnoLoginDTO> alumnoValidator;
+        private readonly IValidator<MaestroLoginDTO> maestroValidator;
 
-        public AuthController(AuthService service)
+        public AuthController(AuthService service, IValidator<AlumnoLoginDTO> alumnoValidator, IValidator<MaestroLoginDTO> maestroValidator)
         {
             this.service = service;
+            this.alumnoValidator = alumnoValidator;
+            this.maestroValidator = maestroValidator;
         }
 
         [HttpPost("alumno")]
         public IActionResult LoginAlumno(AlumnoLoginDTO dto)
         {
+            var result = alumnoValidator.Validate(dto);
+            if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
+
             try
             {
                 var response = service.LoginAlumno(dto);
@@ -37,6 +45,9 @@ namespace AvisosAPI.Controllers
         [HttpPost("maestro")]
         public IActionResult LoginMaestro(MaestroLoginDTO dto)
         {
+            var result = maestroValidator.Validate(dto);
+            if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
+
             try
             {
                 var response = service.LoginMaestro(dto);

@@ -22,9 +22,8 @@ namespace AvisosAPI.Services
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        // la pantalla principal del alumno.
-        // Incluimos navegaciones para que el mapper pueda leer
-        // NombreMaestro y NombreEstado.
+        // pantalla principal del alumno.
+    
         public List<AvisoPersonalResumenDTO> GetAvisosAlumno()
         {
             var idAlumno = ObtenerIdDesdeToken();
@@ -36,10 +35,21 @@ namespace AvisosAPI.Services
                 .OrderByDescending(x => x.FechaEnviado)
                 .ToList();
 
-            return avisos.Select(x => mapper.Map<AvisoPersonalResumenDTO>(x)).ToList();
+            var avisosMapeados = avisos.Select(x => mapper.Map<AvisoPersonalResumenDTO>(x)).ToList();
+
+            //enviar los mapeados como estaban, pero cambiar de una vez el estado de nuevo a recibido para la proxima vez que los vea el alumno. 
+            foreach (var a in avisos)
+            {
+                if (a.IdEstado == 1)
+                {
+                    a.IdEstado = 2;
+                    avisoRepository.Update(a);
+                }
+                    
+            }
+            return avisosMapeados;
         }
 
-        // ── Alumno: abrir un aviso específico ────────────────────────
         // Al abrirlo se registra FechaLeido y se cambia el estado a Leído (3)
 
         public AvisoPersonalDetalleDTO GetDetalle(int idAviso)
@@ -64,7 +74,7 @@ namespace AvisosAPI.Services
             return mapper.Map<AvisoPersonalDetalleDTO>(aviso);
         }
 
-        // ── Maestro: enviar aviso a un alumno ───────────────────────
+        //  Maestro: enviar aviso a un alumno 
         public void Crear(AvisoPersonalCreateDTO dto)
         {
             var idMaestro = ObtenerIdDesdeToken();
@@ -78,7 +88,7 @@ namespace AvisosAPI.Services
             avisoRepository.Insert(aviso);
         }
 
-        // ── Maestro: ver avisos enviados a un alumno específico ─────
+        //  Maestro: ver avisos enviados a un alumno específico 
         public List<AvisoPersonalResumenDTO> GetAvisosDeAlumno(int idAlumno)
         {
             var avisos = avisoRepository.Query()

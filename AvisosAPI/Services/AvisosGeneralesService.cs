@@ -31,13 +31,30 @@ namespace AvisosAPI.Services
         //lista de resumen para alumno
         public List<AvisoGeneralResumenDTO> GetVigentes()
         {
-            var avisos = avisoRepository.Query()
-                .Include(x => x.IdMaestroNavigation)
-                .Where(x => x.FechaExpira > DateTime.Now && x.Eliminado == false)
-                .OrderByDescending(x => x.FechaEnviado)
+            var idAlumno = ObtenerIdDesdeToken();
+
+            var avisos = alumnoAvisoRepository.Query()
+                .Include(x => x.IdAvisoGeneralNavigation)
+                .ThenInclude(x => x.IdMaestroNavigation)
+                .Include(x => x.IdEstadoNavigation)
+                .Where(x => x.IdAlumno == idAlumno 
+                         && x.IdAvisoGeneralNavigation.FechaExpira > DateTime.Now 
+                         && x.IdAvisoGeneralNavigation.Eliminado == false)
+                .OrderByDescending(x => x.IdAvisoGeneralNavigation.FechaEnviado)
                 .ToList();
 
-            return avisos.Select(x => mapper.Map<AvisoGeneralResumenDTO>(x)).ToList();
+            var avisosMapeados = avisos.Select(x => mapper.Map<AvisoGeneralResumenDTO>(x)).ToList();
+
+            foreach (var a in avisos)
+            {
+                if (a.IdEstado == 1)
+                {
+                    a.IdEstado = 2;
+                    alumnoAvisoRepository.Update(a);
+                }
+            }
+
+            return avisosMapeados;
         }
 
 
@@ -125,8 +142,6 @@ namespace AvisosAPI.Services
 
         public void Crear(AvisoGeneralCreateDTO dto)
         {
-            if (dto.FechaExpira <= DateTime.Now)
-                throw new InvalidOperationException("La fecha de expiración debe ser futura.");
 
             var idMaestro = ObtenerIdDesdeToken();
 
@@ -134,8 +149,11 @@ namespace AvisosAPI.Services
             aviso.IdMaestro = idMaestro;
             aviso.FechaEnviado = DateTime.Now;
             aviso.Eliminado = false;
+            avisoRepository.Insert(aviso);
 
-            foreach (var alumno in alumnoRepository.GetAll().Where(x=>x.Eliminado==false))
+            var alumnos = alumnoRepository.GetAll().Where(x => x.Eliminado == false).ToList();
+
+            foreach (var alumno in alumnos)
             {
                 var alumnoAviso = new Alumnoavisogeneral
                 {
@@ -147,7 +165,7 @@ namespace AvisosAPI.Services
                 alumnoAvisoRepository.Insert(alumnoAviso);
             }
 
-            avisoRepository.Insert(aviso);
+           
         }
 
 
