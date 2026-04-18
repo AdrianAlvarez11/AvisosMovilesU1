@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AvisosApp.Views.RegisterView"
+             Title="RegisterView" Background="#FFFBDE">
+    <VerticalStackLayout VerticalOptions="Center">
+        <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Registrar" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
+        <Entry FontFamily="Verdana" Placeholder="Usuario" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Numero de control" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Contraseña" Background="#91C8E4" Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Nombre del grupo" Background="#91C8E4" Margin="10, 10, 10, 0"></Entry>
+        <Grid ColumnDefinitions="*, auto" Margin="10, 10, 10, 0" >
+            <Label FontFamily="Verdana" TextColor="Black" Text="¿Ya estas registrado?" VerticalOptions="Center"></Label>
+            <Button FontFamily="Verdana" Grid.Column="1" Text="Iniciar Sesión" TextColor="BlueViolet" Padding="0,0,5,0"
+                    BackgroundColor="Transparent" VerticalOptions="Center"></Button>
+        </Grid>
+        <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce datos validos."></Label>
+
+        <Button Text="Registrar" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
+    </VerticalStackLayout>
+</ContentPage>
