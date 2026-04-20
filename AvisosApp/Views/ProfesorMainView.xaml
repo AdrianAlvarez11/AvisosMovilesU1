@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AvisosApp.Views.ProfesorMainView"
+             Title="ProfesorMainView" Background="#FFFBDE">
+    <Grid RowDefinitions="auto, *">
+        <!--<Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Adrian Alvarez " FontSize="20"/>
+            <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="3.2" FontSize="20" HorizontalOptions="End"/>
+
+        </Grid>-->
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <!--<Grid ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
+                    <Button FontFamily="Verdana" Text="Generales" TextColor="WhiteSmoke" Padding="0,0,5,0"
+                    Background="#4682A9" VerticalOptions="Center" Margin="0,0,5,0"></Button>
+                    <Label TextColor="#22278B" Text="•" FontSize="Title" Margin="5,-5"></Label>
+                    <Button FontFamily="Verdana" Grid.Column="1" Margin="5,0,0,0" Text="Personales" TextColor="WhiteSmoke" Padding="0,0,5,0"
+                    Background="#4682A9"  VerticalOptions="Center"></Button>
+                    <Label TextColor="#22278B" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
+                </Grid>-->
+                <!--<Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center"></Label>-->
+                <!--poner aqui la plantilla de los avisos generales y una manera de identificar 
+                    si son nuevos, no leidos o leidos.
+                    
+                    buscar si con un trigger se puede hacer que dependiendo la vista cambie la plantilla
+                    o no realmente solo que en una habria que mostrar una cosa y en otra otra.-->
+
+
+                <!--El border es una plantilla para un collectionview.-->
+                <Border Margin="10,10,10,0" Padding="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        </Grid>
+                </Border>
+                <Border Margin="10,10,10,0" Padding="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                    </Grid>
+                </Border>
+                <Border Margin="10,10,10,0" Padding="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                    </Grid>
+                </Border>
+                <Border Margin="10,10,10,0" Padding="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                    </Grid>
+                </Border>
+                <Border Margin="10,10,10,0" Padding="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

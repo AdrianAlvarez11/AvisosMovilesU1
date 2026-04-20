@@ -4,10 +4,10 @@
              x:Class="AvisosApp.Views.AlumnosMainView"
              Title="AlumnosMainView" Background="#FFFBDE">
     <Grid RowDefinitions="auto, *">
-        <Grid ColumnDefinitions="*, auto">
+        <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Adrian Alvarez " FontSize="20"/>
             <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="3.2" FontSize="20" HorizontalOptions="End"/>
-            
+
         </Grid>
 
         <ScrollView Grid.Row="1">
@@ -20,14 +20,29 @@
                     Background="#4682A9"  VerticalOptions="Center"></Button>
                     <Label TextColor="#22278B" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
                 </Grid>
-                <Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes nuevos mensajes" HorizontalTextAlignment="Center"></Label>
-                <CollectionView>
-                    <!--poner aqui la plantilla de los avisos generales y una manera de identificar 
+                <Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center"></Label>
+                <!--poner aqui la plantilla de los avisos generales y una manera de identificar 
                     si son nuevos, no leidos o leidos.
                     
                     buscar si con un trigger se puede hacer que dependiendo la vista cambie la plantilla
                     o no realmente solo que en una habria que mostrar una cosa y en otra otra.-->
-                </CollectionView>
+                
+                
+                <!--El border es una plantilla para un collectionview.-->
+                <Border Margin="10,10,10,0" Padding="10">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label FontFamily="Verdana" Text="Titulo del aviso" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="Sin leer" BackgroundColor="#22278B" TextColor="White" FontSize="10" Padding="5,2" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                        </Grid>
+                        <Label FontFamily="Verdana" Text="Contenido??" FontSize="13" TextColor="Black"></Label>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label FontFamily="Verdana" Text="Enviado por: Adrian Alvarez" FontSize="12" TextColor="Gray"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="12/04/2026" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

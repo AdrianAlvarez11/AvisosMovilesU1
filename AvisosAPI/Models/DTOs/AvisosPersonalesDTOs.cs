@@ -20,6 +20,8 @@
         public string NombreMaestro { get; set; } = null!;
         public DateTime FechaEnviado { get; set; }
         public DateTime? FechaLeido { get; set; }   
+
+        // El estado no lo acupa ya que al entrar y ver los detalles del aviso siempre sera leido.
         public int IdEstado { get; set; }
         public string NombreEstado { get; set; } = null!;
     }
