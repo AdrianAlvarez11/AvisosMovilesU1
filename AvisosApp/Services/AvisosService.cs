@@ -90,5 +90,103 @@ namespace AvisosApp.Services
             return response.IsSuccessStatusCode;
         }
 
+        //Avisos Personales
+        public async Task<List<AvisoPersonalResumenDTO>> GetMisAvisos()
+        {
+            var response = await client.GetAsync("api/avisospersonales");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<AvisoPersonalResumenDTO>>() ?? [];
+            }
+
+            return [];
+        }
+
+        public async Task<AvisoPersonalDetalleDTO?> GetDetalle(int idAviso)
+        {
+            var response = await client.GetAsync($"api/avisospersonales/{idAviso}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<AvisoPersonalDetalleDTO>();
+            }
+
+            return null;
+        }
+
+        public async Task<bool> Crear(AvisoPersonalCreateDTO dto)
+        {
+            var response = await client.PostAsJsonAsync("api/avisospersonales", dto);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<List<AvisoPersonalDetalleDTO>> GetDeAlumno(int idAlumno)
+        {
+            var response = await client.GetAsync($"api/avisospersonales/alumno/{idAlumno}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<AvisoPersonalDetalleDTO>>() ?? [];
+            }
+
+            return [];
+        }
+
+        public async Task<bool> Eliminar(int idAviso)
+        {
+            var response = await client.DeleteAsync($"api/avisospersonales/{idAviso}");
+            return response.IsSuccessStatusCode;
+        }
+
+        // Avisos Grupales
+        public async Task<List<AvisoGeneralResumenDTO>> GetAvisos()
+        {
+            var response = await client.GetAsync("api/avisosgenerales");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<AvisoGeneralResumenDTO>>() ?? [];
+            }
+
+            return [];
+        }
+
+        public async Task<AlumnoDetalleDTO?> GetDetalleAlumno(int idAviso)
+        {
+            var response = await client.GetAsync($"api/avisosgenerales/alumno/{idAviso}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<AlumnoDetalleDTO>();
+            }
+
+            return null;
+        }
+
+        public async Task<AvisoGeneralDetalleMaestroDTO?> GetDetalleMaestro(int idAviso)
+        {
+            var response = await client.GetAsync($"api/avisosgenerales/maestro/{idAviso}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<AvisoGeneralDetalleMaestroDTO>();
+            }
+
+            return null;
+        }
+
+        public async Task<bool> Crear(AvisoGeneralCreateDTO dto)
+        {
+            var response = await client.PostAsJsonAsync("api/avisosgenerales", dto);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> EliminarAvisoGeneral(int idAviso)
+        {
+            var response = await client.DeleteAsync($"api/avisosgenerales/{idAviso}");
+            return response.IsSuccessStatusCode;
+        }
+
     }
 }
