@@ -80,6 +80,12 @@
 	  <MauiXaml Update="Views\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfesorCrearAvisoGeneralView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfesorCrearAvisoPersonalView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfesorDetallesAlumnosView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
