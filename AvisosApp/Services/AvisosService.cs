@@ -22,25 +22,13 @@ namespace AvisosApp.Services
         }
 
         // AUTH
-        public async Task<AlumnoLoginResponseDTO?> LoginAlumno(AlumnoLoginDTO dto)
+        public async Task<LoginResponseDTO?> Login(LoginDTO dto)
         {
-            var response = await client.PostAsJsonAsync("api/auth/alumno", dto);
+            var response = await client.PostAsJsonAsync("api/auth", dto);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<AlumnoLoginResponseDTO>();
-            }
-
-            return null;
-        }
-
-        public async Task<MaestroLoginResponseDTO?> LoginMaestro(MaestroLoginDTO dto)
-        {
-            var response = await client.PostAsJsonAsync("api/auth/maestro", dto);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<MaestroLoginResponseDTO>();
+                return await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
             }
 
             return null;
