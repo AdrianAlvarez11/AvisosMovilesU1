@@ -53,7 +53,11 @@ namespace AvisosApp.ViewModels
 
             if (response != null)
             {
-                await Shell.Current.GoToAsync("//homealumno");
+                if(response.Rol == "Maestro")
+                    await Shell.Current.GoToAsync("//homemaestro");
+                else if(response.Rol == "Alumno")
+                    await Shell.Current.GoToAsync("//homealumno");
+
             }
         }
 

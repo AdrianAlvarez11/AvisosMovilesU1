@@ -9,7 +9,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate views:ProfesorCrearAvisoPersonalView}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="login" />
 
 </Shell>
