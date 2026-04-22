@@ -20,13 +20,11 @@ namespace AvisosApp.ViewModels
         public string NumControl { get; set; }
         public string Contrasena { get; set; }
 
-        public ICommand LoginAlumnoCommand { get; set; }
-        public ICommand LoginMaestroCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
 
         public AvisosViewModel()
         {
-            LoginAlumnoCommand = new Command(LoginAlumno);
-            LoginMaestroCommand = new Command(LoginMaestro);
+            LoginCommand = new Command(Login);
 
             RegistrarMaestroCommand = new Command(RegistrarMaestro);
             RegistrarAlumnoCommand = new Command(RegistrarAlumno);
@@ -45,9 +43,9 @@ namespace AvisosApp.ViewModels
 
         }
 
-        private async void LoginAlumno()
+        private async void Login()
         {
-            var response = await service.LoginAlumno(new AlumnoLoginDTO
+            var response = await service.Login(new LoginDTO
             {
                 NumControl = NumControl,
                 Contrasena = Contrasena
@@ -58,21 +56,6 @@ namespace AvisosApp.ViewModels
                 await Shell.Current.GoToAsync("//homealumno");
             }
         }
-
-        private async void LoginMaestro()
-        {
-            var response = await service.LoginMaestro(new MaestroLoginDTO
-            {
-                NumControl = NumControl,
-                Contrasena = Contrasena
-            });
-
-            if (response != null)
-            {
-                await Shell.Current.GoToAsync("//homemaestro");
-            }
-        }
-
 
 
         public MaestroRegistroDTO Maestro { get; set; } = new();
