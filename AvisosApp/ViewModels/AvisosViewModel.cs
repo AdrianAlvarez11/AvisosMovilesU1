@@ -21,10 +21,14 @@ namespace AvisosApp.ViewModels
         public string Contrasena { get; set; }
 
         public ICommand LoginCommand { get; set; }
+        public ICommand VistaRegistrarCommand { get; set; }
+        public ICommand VistaLoginCommand { get; set; }
 
         public AvisosViewModel()
         {
             LoginCommand = new Command(Login);
+            VistaRegistrarCommand = new Command(() => Shell.Current.GoToAsync("//registrar"));
+            VistaLoginCommand = new Command(() => Shell.Current.GoToAsync("//login"));
 
             RegistrarMaestroCommand = new Command(RegistrarMaestro);
             RegistrarAlumnoCommand = new Command(RegistrarAlumno);

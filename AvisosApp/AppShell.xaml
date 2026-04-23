@@ -5,11 +5,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AvisosApp"
     xmlns:views="clr-namespace:AvisosApp.Views"
+    xmlns:viewmodels="clr-namespace:AvisosApp.ViewModels"
     Title="AvisosApp">
 
+    <Shell.BindingContext>
+        <viewmodels:AvisosViewModel></viewmodels:AvisosViewModel>
+    </Shell.BindingContext>
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="login" />
+    
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:RegisterView}"
+        Route="registrar" />
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:ProfesorMainView}"
+        Route="homemaestro" />
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:AlumnosMainView}"
+        Route="homealumno" />
 
 </Shell>

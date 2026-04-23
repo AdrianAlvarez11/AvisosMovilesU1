@@ -10,7 +10,7 @@ namespace AvisosApp.Services
 {
     public class AvisosService
     {
-        string baseUrl = "https://localhost:9123/";
+        string baseUrl = "http://localhost:5058/";
         HttpClient client;
 
         public AvisosService()

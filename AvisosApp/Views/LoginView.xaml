@@ -6,15 +6,15 @@
 
     <VerticalStackLayout VerticalOptions="Center">
         <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Inicia sesión" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
-        <Entry FontFamily="Verdana" Placeholder="Usuario" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
-        <Entry FontFamily="Verdana" Placeholder="Contraseña" Background="#91C8E4" Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Numero de control" Text="{Binding NumControl}" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Contraseña" Text="{Binding Contrasena}" Background="#91C8E4" Margin="10, 10, 10, 0"></Entry>
         <Grid ColumnDefinitions="*, auto" Margin="10, 10, 10, 0" >
             <Label FontFamily="Verdana" TextColor="Black" Text="¿No tienes cuenta?" VerticalOptions="Center"></Label>
-            <Button FontFamily="Verdana" Grid.Column="1" Text="Registrar" TextColor="BlueViolet" Padding="0,0,5,0"
+            <Button FontFamily="Verdana" Grid.Column="1" Text="Registrar" Command="{Binding VistaRegistrarCommand}" TextColor="BlueViolet" Padding="0,0,5,0"
                     BackgroundColor="Transparent" VerticalOptions="Center"></Button>
         </Grid>
         <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce un correo y/o clave validos."></Label>
 
-        <Button Text="Iniciar sesión" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
+        <Button Text="Iniciar sesión" Command="{Binding LoginCommand}" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
     </VerticalStackLayout>
 </ContentPage>
