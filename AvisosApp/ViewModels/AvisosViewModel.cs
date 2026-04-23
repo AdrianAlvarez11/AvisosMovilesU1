@@ -96,7 +96,10 @@ namespace AvisosApp.ViewModels
             if (response != null)
             {
                 if(response.Rol == "Maestro")
+                {
                     await Shell.Current.GoToAsync("//homemaestro");
+                    CargarGrupo();
+                }
                 else if(response.Rol == "Alumno")
                     await Shell.Current.GoToAsync("//homealumno");
 
@@ -123,7 +126,11 @@ namespace AvisosApp.ViewModels
             var response = await service.RegistrarAlumno(Alumno);
 
             if (response)
+            {
+                CargarGrupo();
                 await Shell.Current.GoToAsync("//homemaestro");
+
+            }
         }
 
 

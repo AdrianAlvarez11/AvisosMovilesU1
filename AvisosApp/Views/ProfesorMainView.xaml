@@ -100,11 +100,11 @@
                     <Button Grid.Column="1" Text="General" Command="{Binding CambiarAGeneralesCommand}" BackgroundColor="#4682A9" TextColor="White"></Button>
                 </Grid>
 
-                <CollectionView ItemsSource="{Binding Alumnos}" IsVisible="{Binding MostrarGrupo}">
+                <CollectionView Margin="10" ItemsSource="{Binding Alumnos}" IsVisible="{Binding MostrarGrupo}">
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="10" Padding="10">
+                            <Border Padding="10">
                                 <Grid ColumnDefinitions="*,Auto">
 
                                     <Label Text="{Binding Nombre}" FontAttributes="Bold" TextColor="Black"></Label>

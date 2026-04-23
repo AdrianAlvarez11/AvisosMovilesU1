@@ -10,7 +10,7 @@ namespace AvisosApp.Services
 {
     public class AvisosService
     {
-        string baseUrl = "http://localhost:5058/";
+        string baseUrl = "https://localhost:7044/";
         HttpClient client;
 
         public AvisosService()
@@ -76,6 +76,8 @@ namespace AvisosApp.Services
         // Grupos
         public async Task<GrupoDetalleDTO?> GetGrupo()
         {
+            await SetToken();
+
             var response = await client.GetAsync("api/grupos");
 
             if (response.IsSuccessStatusCode)
