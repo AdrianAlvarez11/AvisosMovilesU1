@@ -11,15 +11,6 @@
     <Shell.BindingContext>
         <viewmodels:AvisosViewModel></viewmodels:AvisosViewModel>
     </Shell.BindingContext>
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:LoginView}"
-        Route="login" />
-    
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:RegisterView}"
-        Route="registrar" />
 
     <ShellContent
         Title="Home"
@@ -27,7 +18,20 @@
         Route="homemaestro" />
     <ShellContent
         Title="Home"
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="login" />
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:RegisterView}"
+        Route="registrar" />
+
+    <ShellContent
+        Title="Home"
         ContentTemplate="{DataTemplate views:AlumnosMainView}"
         Route="homealumno" />
-
+    <ShellContent
+                Title="Home"
+        ContentTemplate="{DataTemplate views:RegisterAlumnoView}"
+        Route="registrarAlumno" />
 </Shell>

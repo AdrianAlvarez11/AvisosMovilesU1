@@ -24,6 +24,23 @@ namespace AvisosApp.ViewModels
         public ICommand VistaRegistrarCommand { get; set; }
         public ICommand VistaLoginCommand { get; set; }
 
+        private bool mostrarGrupo = true;
+        public bool MostrarGrupo
+        {
+            get => mostrarGrupo;
+            set
+            {
+                mostrarGrupo = value;
+                PropertyChanged?.Invoke(this, new(nameof(MostrarGrupo)));
+                PropertyChanged?.Invoke(this, new(nameof(MostrarGenerales)));
+            }
+        }
+
+        public bool MostrarGenerales => !MostrarGrupo;
+
+        public ICommand CambiarAGrupoCommand { get; set; }
+        public ICommand CambiarAGeneralesCommand { get; set; }
+
         public AvisosViewModel()
         {
             LoginCommand = new Command(Login);
@@ -34,6 +51,7 @@ namespace AvisosApp.ViewModels
             RegistrarAlumnoCommand = new Command(RegistrarAlumno);
 
             CargarGrupoCommand = new Command(CargarGrupo);
+            IrRegistrarAlumnoCommand = new Command(() => Shell.Current.GoToAsync("//registrarAlumno"));
             VerAlumnoCommand = new Command<int>(GetAlumno);
             EliminarAlumnoCommand = new Command<int>(EliminarAlumno);
 
@@ -45,6 +63,18 @@ namespace AvisosApp.ViewModels
             VerAvisosGeneralesCommand = new Command<int>(VerDetalleAvisosGenerales);
             EliminarAvisosGeneralesCommand = new Command<int>(EliminarAvisosGenerales);
 
+
+            CambiarAGrupoCommand = new Command(() =>
+            {
+                MostrarGrupo = true;
+                CargarGrupo();
+            });
+
+            CambiarAGeneralesCommand = new Command(() =>
+            {
+                MostrarGrupo = false;
+                CargarAvisosGenerales();
+            });
         }
 
         private async void Login()
@@ -85,7 +115,7 @@ namespace AvisosApp.ViewModels
             var response = await service.RegistrarAlumno(Alumno);
 
             if (response)
-                await Shell.Current.GoToAsync("//login");
+                await Shell.Current.GoToAsync("//homemaestro");
         }
 
 
@@ -94,6 +124,7 @@ namespace AvisosApp.ViewModels
         public ObservableCollection<AlumnoResumenDTO> Alumnos { get; set; } = new();
         public AlumnoDetalleDTO? AlumnoSeleccionado { get; set; }
 
+        public ICommand IrRegistrarAlumnoCommand { get; set; }
         public ICommand CargarGrupoCommand { get; set; }
         public ICommand VerAlumnoCommand { get; set; }
         public ICommand EliminarAlumnoCommand { get; set; }
