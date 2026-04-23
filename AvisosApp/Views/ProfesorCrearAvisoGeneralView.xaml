@@ -4,15 +4,19 @@
              x:Class="AvisosApp.Views.ProfesorCrearAvisoGeneralView"
              Title="ProfesorCrearAvisoGeneralView" Background="#dad7cd">
 
-    <VerticalStackLayout VerticalOptions="Center">
-        <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Crear Aviso General" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
-        <Entry FontFamily="Verdana" Placeholder="Titulo" Text="{Binding AvisoGeneral.Titulo}" Background="#a3b18a"  Margin="10, 10, 10, 0"></Entry>
-        <Entry FontFamily="Verdana" Placeholder="Contenido" Text="{Binding AvisoGeneral.Contenido}" Background="#a3b18a" Margin="10, 10, 10, 0"></Entry>
-        <Grid ColumnDefinitions="auto,*">
-            <Label HorizontalOptions="Fill" TextColor="Black" VerticalOptions="Center" FontFamily="Verdana" Text="Fecha de expiración:" Margin="10, 10, 10, 0"></Label>
-            <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#a3b18a" Date="{Binding AvisoGeneral.FechaExpira}" Margin="10, 10, 10, 0"></DatePicker>
-        </Grid>
-        <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce datos validos"></Label>
-        <Button Text="Crear" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="auto, *">
+        <Button Text="← Cancelar / Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center">
+            <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Crear Aviso General" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
+            <Entry FontFamily="Verdana" Placeholder="Titulo" Text="{Binding AvisoGeneral.Titulo}" Background="#a3b18a"  Margin="10, 10, 10, 0"></Entry>
+            <Entry FontFamily="Verdana" Placeholder="Contenido" Text="{Binding AvisoGeneral.Contenido}" Background="#a3b18a" Margin="10, 10, 10, 0"></Entry>
+            <Grid ColumnDefinitions="auto,*">
+                <Label HorizontalOptions="Fill" TextColor="Black" VerticalOptions="Center" FontFamily="Verdana" Text="Fecha de expiración:" Margin="10, 10, 10, 0"></Label>
+                <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#a3b18a" Date="{Binding AvisoGeneral.FechaExpira}" Margin="10, 10, 10, 0"></DatePicker>
+            </Grid>
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce datos validos"></Label>
+            <Button Text="Crear" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

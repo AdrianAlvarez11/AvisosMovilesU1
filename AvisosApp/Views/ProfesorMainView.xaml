@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:AvisosApp.ViewModels"
              x:Class="AvisosApp.Views.ProfesorMainView"
              Title="ProfesorMainView" Background="#dad7cd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
     <!--<Grid RowDefinitions="auto, *" Margin="0,0,0,10">
         <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Desarrollo de Aps. Mov. " FontSize="20"/>
@@ -128,6 +131,9 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAvisosGeneralesCommand}" CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout Margin="10,0,10,10">
 
                                     <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" TextColor="Black"></Label>
