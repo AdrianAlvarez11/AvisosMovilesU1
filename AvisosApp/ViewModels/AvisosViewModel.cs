@@ -21,6 +21,7 @@ namespace AvisosApp.ViewModels
         public string Contrasena { get; set; }
 
         public ICommand LoginCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
         public ICommand VistaRegistrarCommand { get; set; }
         public ICommand VistaLoginCommand { get; set; }
 
@@ -44,6 +45,7 @@ namespace AvisosApp.ViewModels
         public AvisosViewModel()
         {
             LoginCommand = new Command(Login);
+            LogoutCommand = new Command(Logout);
             VistaRegistrarCommand = new Command(() => Shell.Current.GoToAsync("//registrar"));
             VistaLoginCommand = new Command(() => Shell.Current.GoToAsync("//login"));
 
@@ -75,6 +77,12 @@ namespace AvisosApp.ViewModels
                 MostrarGrupo = false;
                 CargarAvisosGenerales();
             });
+        }
+
+        private void Logout()
+        {
+            service.Logout();
+            Shell.Current.GoToAsync("//login");
         }
 
         private async void Login()

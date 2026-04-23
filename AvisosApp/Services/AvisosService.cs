@@ -28,10 +28,25 @@ namespace AvisosApp.Services
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
+                
+                var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
+                if (loginResponse != null)
+                {
+                    var token = loginResponse.Token;
+                    await SecureStorage.SetAsync("MiToken", token);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    return loginResponse;
+                }
             }
 
             return null;
+        }
+
+        public void Logout()
+        {
+            SecureStorage.Remove("MiToken");
+
+            client.DefaultRequestHeaders.Authorization = null;
         }
 
         // Registro
@@ -127,7 +142,7 @@ namespace AvisosApp.Services
             return response.IsSuccessStatusCode;
         }
 
-        // Avisos Grupales
+        // Avisos Generales
         public async Task<List<AvisoGeneralResumenDTO>> GetAvisos()
         {
             var response = await client.GetAsync("api/avisosgenerales");
