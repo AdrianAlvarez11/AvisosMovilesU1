@@ -16,7 +16,8 @@
                 <Label FontFamily="Verdana" Text="Enviado por: Adrian Alvarez" FontSize="12" TextColor="Gray"></Label>
                 <Label FontFamily="Verdana" Grid.Column="1" Text="12/04/2026" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
                 <Label FontFamily="Verdana" Grid.Row="1" Text="Leido:" FontSize="12" TextColor="Gray"></Label>
-                <Label FontFamily="Verdana" Grid.Row="1" Grid.Column="1" Text="20/04/2026" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                <Label FontFamily="Verdana" Grid.Row="1" Grid.Column="1" Text="20/04/2026" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label
+                       
             </Grid>
         </Grid>
     </Border>
