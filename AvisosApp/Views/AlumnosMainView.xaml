@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AvisosApp.Views.AlumnosMainView"
-             Title="AlumnosMainView" Background="#FFFBDE">
+             Title="AlumnosMainView" Background="#dad7cd">
     <Grid RowDefinitions="auto, *">
         <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Adrian Alvarez " FontSize="20"/>
@@ -14,11 +14,11 @@
             <VerticalStackLayout>
                 <Grid ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
                     <Button FontFamily="Verdana" Text="Generales" TextColor="WhiteSmoke" Padding="0,0,5,0"
-                    Background="#4682A9" VerticalOptions="Center" Margin="0,0,5,0"></Button>
-                    <Label TextColor="#22278B" Text="•" FontSize="Title" Margin="5,-5"></Label>
+                    Background="#588157" VerticalOptions="Center" Margin="0,0,5,0"></Button>
+                    <Label TextColor="#3a5a40" Text="•" FontSize="Title" Margin="5,-5"></Label>
                     <Button FontFamily="Verdana" Grid.Column="1" Margin="5,0,0,0" Text="Personales" TextColor="WhiteSmoke" Padding="0,0,5,0"
-                    Background="#4682A9"  VerticalOptions="Center"></Button>
-                    <Label TextColor="#22278B" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
+                    Background="#588157"  VerticalOptions="Center"></Button>
+                    <Label TextColor="#3a5a40" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
                 </Grid>
                 <Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center"></Label>
                 <!--poner aqui la plantilla de los avisos generales y una manera de identificar 
@@ -33,7 +33,7 @@
                     <VerticalStackLayout>
                         <Grid ColumnDefinitions="*,Auto">
                             <Label FontFamily="Verdana" Text="Titulo del aviso" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
-                            <Label FontFamily="Verdana" Grid.Column="1" Text="Sin leer" BackgroundColor="#22278B" TextColor="White" FontSize="10" Padding="5,2" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="Sin leer" BackgroundColor="#3a5a40" TextColor="White" FontSize="10" Padding="5,2" HorizontalOptions="End" VerticalOptions="Start"></Label>
                         </Grid>
                         <Label FontFamily="Verdana" Text="Contenido??" FontSize="13" TextColor="Black"></Label>
                         <Grid ColumnDefinitions="*,Auto">

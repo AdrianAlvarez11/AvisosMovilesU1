@@ -2,15 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AvisosApp.Views.RegisterAlumnoView"
-             Title="RegisterAlumnoView" Background="#FFFBDE">
+             Title="RegisterAlumnoView" Background="#dad7cd">
     <VerticalStackLayout VerticalOptions="Center">
         <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Registrar" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
-        <Entry FontFamily="Verdana" Text="{Binding Alumno.Nombre}" Placeholder="Nombre" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
-        <Entry FontFamily="Verdana" Text="{Binding Alumno.NumControl}" Placeholder="Numero de control" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
-        <Entry FontFamily="Verdana" Text="{Binding Alumno.Contrasena}" Placeholder="Contraseña" Background="#91C8E4" Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Text="{Binding Alumno.Nombre}" Placeholder="Nombre" Background="#a3b18a"  Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Text="{Binding Alumno.NumControl}" Placeholder="Numero de control" Background="#a3b18a"  Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Text="{Binding Alumno.Contrasena}" Placeholder="Contraseña" Background="#a3b18a" Margin="10, 10, 10, 0"></Entry>
         <!--<Grid ColumnDefinitions="*, auto" Margin="10, 10, 10, 0" >
             <Label FontFamily="Verdana" TextColor="Black" Text="¿Ya estas registrado?" VerticalOptions="Center"></Label>
-            <Button FontFamily="Verdana" Grid.Column="1" Text="Iniciar Sesión" TextColor="BlueViolet" Padding="0,0,5,0" Command="{Binding VistaLoginCommand}"
+            <Button FontFamily="Verdana" Grid.Column="1" Text="Iniciar Sesión" TextColor="#344e41" Padding="0,0,5,0" Command="{Binding VistaLoginCommand}"
                     BackgroundColor="Transparent" VerticalOptions="Center"></Button>
         </Grid>-->
         <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce datos validos."></Label>

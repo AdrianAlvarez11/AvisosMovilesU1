@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:AvisosApp.ViewModels"
              x:Class="AvisosApp.Views.ProfesorMainView"
-             Title="ProfesorMainView" Background="#FFFBDE">
+             Title="ProfesorMainView" Background="#dad7cd">
     <!--<Grid RowDefinitions="auto, *" Margin="0,0,0,10">
         <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Desarrollo de Aps. Mov. " FontSize="20"/>
@@ -13,15 +13,15 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout>
                 <Grid RowDefinitions="*,*" ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
-                    <Border Background="#4682A9" Stroke="AliceBlue">
+                    <Border Background="#588157" Stroke="AliceBlue">
                         <Button FontFamily="Verdana" Text="Mi Grupo" TextColor="WhiteSmoke" CornerRadius="0" 
                         Background="Transparent" VerticalOptions="Center" Margin="0"></Button>
                     </Border>
-                    <Border  Grid.Column="1" Background="#4682A9" Stroke="Black">
+                    <Border  Grid.Column="1" Background="#588157" Stroke="Black">
                         <Button FontFamily="Verdana" Margin="0,0,0,0" Text="General" CornerRadius="0" TextColor="WhiteSmoke"
                                 Background="Transparent" VerticalOptions="Center"></Button>
                     </Border>
-                    <Border  Grid.Row="1" Grid.Column="1" Background="BlueViolet" HorizontalOptions="End" WidthRequest="50" Margin="0,10,0,0" Stroke="Black">
+                    <Border  Grid.Row="1" Grid.Column="1" Background="#344e41" HorizontalOptions="End" WidthRequest="50" Margin="0,10,0,0" Stroke="Black">
                         <Button FontFamily="Verdana" Margin="0,0,0,0" Text="+" CornerRadius="0" TextColor="WhiteSmoke"
                                 Background="Transparent" VerticalOptions="Center"></Button>
                     </Border>
@@ -85,7 +85,7 @@
                    Text="{Binding Alumnos.Count, StringFormat='{0} Alumnos'}" FontAttributes="Bold" TextColor="Black" FontSize="20"></Label>
         </Grid>
         
-        <Button Text="+" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="BlueViolet" TextColor="White"
+        <Button Text="+" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
             FontSize="24" WidthRequest="60" HeightRequest="60" CornerRadius="30" HorizontalOptions="End" VerticalOptions="End"
             Margin="20" IsVisible="{Binding MostrarGrupo}"></Button>
         
@@ -95,9 +95,9 @@
                 <Grid ColumnDefinitions="*,*"
                       Margin="10">
 
-                    <Button Text="Mi Grupo" Command="{Binding CambiarAGrupoCommand}" BackgroundColor="#4682A9" TextColor="White"></Button>
+                    <Button Text="Mi Grupo" Command="{Binding CambiarAGrupoCommand}" BackgroundColor="#588157" TextColor="White"></Button>
 
-                    <Button Grid.Column="1" Text="General" Command="{Binding CambiarAGeneralesCommand}" BackgroundColor="#4682A9" TextColor="White"></Button>
+                    <Button Grid.Column="1" Text="General" Command="{Binding CambiarAGeneralesCommand}" BackgroundColor="#588157" TextColor="White"></Button>
                 </Grid>
 
                 <CollectionView Margin="10" ItemsSource="{Binding Alumnos}" IsVisible="{Binding MostrarGrupo}">
