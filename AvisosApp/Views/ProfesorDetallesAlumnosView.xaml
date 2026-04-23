@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AvisosApp.Views.ProfesorDetallesAlumnosView"
              Title="ProfesorDetallesAlumnosView" Background="#dad7cd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="auto,auto, *">
+        <Button Text="← Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
 
-    <Grid RowDefinitions="auto, *">
-        <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+        <Grid Grid.Row="1" ColumnDefinitions="*, auto" Margin="0,0,0,10">
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.Nombre}" FontSize="20"/>
             <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.NumControl}" FontSize="20" HorizontalOptions="End"/>
 

@@ -30,4 +30,13 @@
     Title="Registro"
     ContentTemplate="{DataTemplate views:RegisterView}"
     Route="registrar" />
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:AlumnoAvisoDetallesView}"
+        Route="detalleavisoalumno" />
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:AlumnoAvisoPersonalDetallesView}"
+        Route="detalleavisopersonal" />
 </Shell>

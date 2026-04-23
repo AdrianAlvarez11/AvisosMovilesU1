@@ -17,8 +17,27 @@ namespace AvisosApp.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public string NumControl { get; set; }
-        public string Contrasena { get; set; }
+        private string numControl = "";
+        public string NumControl
+        {
+            get => numControl;
+            set
+            {
+                numControl = value;
+                PropertyChanged?.Invoke(this, new(nameof(NumControl)));
+            }
+        }
+
+        private string contrasena = "";
+        public string Contrasena
+        {
+            get => contrasena;
+            set
+            {
+                contrasena = value;
+                PropertyChanged?.Invoke(this, new(nameof(Contrasena)));
+            }
+        }
 
         public ICommand LoginCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
@@ -38,6 +57,23 @@ namespace AvisosApp.ViewModels
         }
 
         public bool MostrarGenerales => !MostrarGrupo;
+
+        // Propiedades para Alumno
+        private bool mostrarAvisosGeneralesAlumno = true;
+        public bool MostrarAvisosGeneralesAlumno
+        {
+            get => mostrarAvisosGeneralesAlumno;
+            set
+            {
+                mostrarAvisosGeneralesAlumno = value;
+                PropertyChanged?.Invoke(this, new(nameof(MostrarAvisosGeneralesAlumno)));
+                PropertyChanged?.Invoke(this, new(nameof(MostrarAvisosPersonalesAlumno)));
+            }
+        }
+        public bool MostrarAvisosPersonalesAlumno => !MostrarAvisosGeneralesAlumno;
+
+        public ICommand CambiarAGeneralesAlumnoCommand { get; set; }
+        public ICommand CambiarAPersonalesAlumnoCommand { get; set; }
 
         public ICommand CambiarAGrupoCommand { get; set; }
         public ICommand CambiarAGeneralesCommand { get; set; }
@@ -71,6 +107,10 @@ namespace AvisosApp.ViewModels
             VerAvisosGeneralesCommand = new Command<int>(VerDetalleAvisosGenerales);
             EliminarAvisosGeneralesCommand = new Command<int>(EliminarAvisosGenerales);
 
+            VerAvisosGeneralesAlumnoCommand = new Command<int>(VerDetalleAvisosGeneralesAlumno);
+
+            RegresarMaestroCommand = new Command(() => Shell.Current.GoToAsync("//homemaestro"));
+            RegresarAlumnoCommand = new Command(() => Shell.Current.GoToAsync("//homealumno"));
 
             CambiarAGrupoCommand = new Command(() =>
             {
@@ -84,6 +124,17 @@ namespace AvisosApp.ViewModels
                 CargarAvisosGenerales();
             });
 
+            CambiarAGeneralesAlumnoCommand = new Command(() =>
+            {
+                MostrarAvisosGeneralesAlumno = true;
+                CargarAvisosGeneralesAlumno();
+            });
+
+            CambiarAPersonalesAlumnoCommand = new Command(() =>
+            {
+                MostrarAvisosGeneralesAlumno = false;
+                CargarAvisosPersonales();
+            });
         }
 
         public void CambiarACrearAvisoPersonal()
@@ -93,6 +144,8 @@ namespace AvisosApp.ViewModels
         private void Logout()
         {
             service.Logout();
+            NumControl = "";
+            Contrasena = "";
             Shell.Current.GoToAsync("//login");
         }
 
@@ -112,8 +165,11 @@ namespace AvisosApp.ViewModels
                     CargarGrupo();
                 }
                 else if (response.Rol == "Alumno")
+                {
                     await Shell.Current.GoToAsync("//homealumno");
-
+                    CargarAvisosGeneralesAlumno();
+                    MostrarAvisosGeneralesAlumno = true;
+                }
             }
         }
 
@@ -256,11 +312,17 @@ namespace AvisosApp.ViewModels
         private List<AvisoGeneralResumenDTO> listaGeneral = new();
         public AvisoGeneralCreateDTO AvisoGeneral { get; set; } = new();
         public AvisoGeneralDetalleMaestroDTO? SeleccionadoGeneral { get; set; }
+        public AvisoGeneralDetalleAlumnoDTO? SeleccionadoGeneralAlumno { get; set; }
 
         public ICommand CrearAvisoGeneralCommand { get; set; }
         public ICommand CargarAvisosGeneralesCommand { get; set; }
         public ICommand VerAvisosGeneralesCommand { get; set; }
         public ICommand EliminarAvisosGeneralesCommand { get; set; }
+        
+        public ICommand VerAvisosGeneralesAlumnoCommand { get; set; }
+
+        public ICommand RegresarMaestroCommand { get; set; }
+        public ICommand RegresarAlumnoCommand { get; set; }
 
         private async void CrearAvisoGeneral()
         {
@@ -271,6 +333,16 @@ namespace AvisosApp.ViewModels
                 await Shell.Current.GoToAsync("//homemaestro");
             }
         }
+        
+        private async void CargarAvisosGeneralesAlumno()
+        {
+            var avisosGenerales = await service.GetAvisosGeneralesAlumno();
+            listaGeneral = avisosGenerales;
+
+            AvisosGenerales.Clear();
+            avisosGenerales.ForEach(AvisosGenerales.Add);
+        }
+
         private async void CargarAvisosGenerales()
         {
 
@@ -291,6 +363,18 @@ namespace AvisosApp.ViewModels
                 PropertyChanged?.Invoke(this, new(nameof(SeleccionadoGeneral)));
 
                 await Shell.Current.GoToAsync("//detalleavisogeneral");
+            }
+        }
+        
+        private async void VerDetalleAvisosGeneralesAlumno(int id)
+        {
+            var aviso = await service.GetDetalleAlumno(id);
+            if (aviso != null)
+            {
+                SeleccionadoGeneralAlumno = aviso;
+                PropertyChanged?.Invoke(this, new(nameof(SeleccionadoGeneralAlumno)));
+
+                await Shell.Current.GoToAsync("//detalleavisoalumno");
             }
         }
 

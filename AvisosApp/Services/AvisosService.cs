@@ -111,6 +111,7 @@ namespace AvisosApp.Services
         //Avisos Personales
         public async Task<List<AvisoPersonalResumenDTO>> GetMisAvisos()
         {
+            await SetToken();
             var response = await client.GetAsync("api/avisospersonales");
 
             if (response.IsSuccessStatusCode)
@@ -123,6 +124,7 @@ namespace AvisosApp.Services
 
         public async Task<AvisoPersonalDetalleDTO?> GetDetalle(int idAviso)
         {
+            await SetToken();
             var response = await client.GetAsync($"api/avisospersonales/{idAviso}");
 
             if (response.IsSuccessStatusCode)
@@ -172,13 +174,27 @@ namespace AvisosApp.Services
             return [];
         }
 
-        public async Task<AlumnoDetalleDTO?> GetDetalleAlumno(int idAviso)
+        public async Task<List<AvisoGeneralResumenDTO>> GetAvisosGeneralesAlumno()
         {
+            await SetToken();
+            var response = await client.GetAsync("api/avisosgenerales");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<AvisoGeneralResumenDTO>>() ?? [];
+            }
+
+            return [];
+        }
+
+        public async Task<AvisoGeneralDetalleAlumnoDTO?> GetDetalleAlumno(int idAviso)
+        {
+            await SetToken();
             var response = await client.GetAsync($"api/avisosgenerales/alumno/{idAviso}");
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<AlumnoDetalleDTO>();
+                return await response.Content.ReadFromJsonAsync<AvisoGeneralDetalleAlumnoDTO>();
             }
 
             return null;
