@@ -39,4 +39,12 @@
         Title="Home"
         ContentTemplate="{DataTemplate views:ProfesorCrearAvisoGeneralView}"
         Route="crearavisogeneral" />
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:ProfesorCrearAvisoPersonalView}"
+        Route="crearavisopersonal" />
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:ProfesorDetallesAlumnosView}"
+        Route="detallesalumnos" />
 </Shell>

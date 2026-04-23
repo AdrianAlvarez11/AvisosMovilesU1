@@ -90,6 +90,8 @@ namespace AvisosApp.Services
 
         public async Task<AlumnoDetalleDTO?> GetAlumno(int idAlumno)
         {
+            await SetToken();
+
             var response = await client.GetAsync($"api/grupos/alumno/{idAlumno}");
 
             if (response.IsSuccessStatusCode)
@@ -133,6 +135,7 @@ namespace AvisosApp.Services
 
         public async Task<bool> Crear(AvisoPersonalCreateDTO dto)
         {
+            await SetToken();
             var response = await client.PostAsJsonAsync("api/avisospersonales", dto);
             return response.IsSuccessStatusCode;
         }

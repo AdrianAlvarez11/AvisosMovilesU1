@@ -64,6 +64,9 @@ namespace AvisosApp.ViewModels
             IrCrearAvisoGeneralCommand = new Command(() => Shell.Current.GoToAsync("//crearavisogeneral"));
             CrearAvisoGeneralCommand = new Command(CrearAvisoGeneral);
 
+            IrCrearAvisoPersonalCommand = new Command(() => Shell.Current.GoToAsync("//crearavisopersonal"));
+            CrearAvisoPersonalCommand = new Command(CrearAvisoPersonal);
+
             CargarAvisosGeneralesCommand = new Command(CargarAvisosGenerales);
             VerAvisosGeneralesCommand = new Command<int>(VerDetalleAvisosGenerales);
             EliminarAvisosGeneralesCommand = new Command<int>(EliminarAvisosGenerales);
@@ -98,12 +101,12 @@ namespace AvisosApp.ViewModels
 
             if (response != null)
             {
-                if(response.Rol == "Maestro")
+                if (response.Rol == "Maestro")
                 {
                     await Shell.Current.GoToAsync("//homemaestro");
                     CargarGrupo();
                 }
-                else if(response.Rol == "Alumno")
+                else if (response.Rol == "Alumno")
                     await Shell.Current.GoToAsync("//homealumno");
 
             }
@@ -144,6 +147,7 @@ namespace AvisosApp.ViewModels
 
         public ICommand IrRegistrarAlumnoCommand { get; set; }
         public ICommand IrCrearAvisoGeneralCommand { get; set; }
+        public ICommand IrCrearAvisoPersonalCommand { get; set; }
         public ICommand CargarGrupoCommand { get; set; }
         public ICommand VerAlumnoCommand { get; set; }
         public ICommand EliminarAlumnoCommand { get; set; }
@@ -170,8 +174,8 @@ namespace AvisosApp.ViewModels
             {
                 AlumnoSeleccionado = alumno;
                 PropertyChanged?.Invoke(this, new(nameof(AlumnoSeleccionado)));
+                await Shell.Current.GoToAsync("//detallesalumnos");
 
-                await Shell.Current.GoToAsync("//detallealumno");
             }
         }
 
@@ -191,11 +195,25 @@ namespace AvisosApp.ViewModels
 
         public ObservableCollection<AvisoPersonalResumenDTO> Avisos { get; set; } = new();
         private List<AvisoPersonalResumenDTO> lista = new();
+        public AvisoPersonalCreateDTO AvisoPersonal { get; set; } = new();
+
         public AvisoPersonalDetalleDTO? AvisoSeleccionado { get; set; }
 
+        public ICommand CrearAvisoPersonalCommand { get; set; }
         public ICommand CargarAvisosPersonalesCommand { get; set; }
         public ICommand VerAvisosPersonalesCommand { get; set; }
         public ICommand EliminarAvisosPersonalesCommand { get; set; }
+
+        private async void CrearAvisoPersonal()
+        {
+            AvisoPersonal.IdAlumno = AlumnoSeleccionado.Id;
+            var response = await service.Crear(AvisoPersonal);
+            if (response)
+            {
+                CargarAvisosPersonales();
+                await Shell.Current.GoToAsync("//homemaestro");
+            }
+        }
         private async void CargarAvisosPersonales()
         {
 
@@ -254,7 +272,7 @@ namespace AvisosApp.ViewModels
             var avisosGenerales = await service.GetAvisos();
             listaGeneral = avisosGenerales;
 
-            Avisos.Clear();
+            AvisosGenerales.Clear();
             avisosGenerales.ForEach(AvisosGenerales.Add);
 
         }

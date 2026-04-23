@@ -72,9 +72,7 @@
             </VerticalStackLayout>
         </ScrollView>
     </Grid>-->
-    <ContentPage.BindingContext>
-        <vm:AvisosViewModel/>
-    </ContentPage.BindingContext>
+
 
     <Grid RowDefinitions="auto,auto, *" Margin="0,0,0,10">
 
@@ -85,11 +83,11 @@
                    Text="{Binding Alumnos.Count, StringFormat='{0} Alumnos'}" FontAttributes="Bold" TextColor="Black" FontSize="20"></Label>
         </Grid>
         
-        <Button Text="+" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
-            FontSize="24" WidthRequest="60" HeightRequest="60" CornerRadius="30" HorizontalOptions="End" VerticalOptions="End"
-            Margin="20" IsVisible="{Binding MostrarGrupo}"></Button>
+        <Button Text="Crear Alumno" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
+            FontSize="18" WidthRequest="150" CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
+            Margin="10" IsVisible="{Binding MostrarGrupo}"></Button>
         <Button Text="Crear Aviso General" Command="{Binding IrCrearAvisoGeneralCommand}" Grid.RowSpan="3" BackgroundColor="BlueViolet" TextColor="White"
-            FontSize="18" WidthRequest="100"  CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
+            FontSize="18" WidthRequest="200"  CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
             Margin="10" IsVisible="{Binding MostrarGenerales}"></Button>
 
         <ScrollView Grid.Row="1">
@@ -108,6 +106,10 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border Padding="10">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAlumnoCommand}"
+                                        CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
                                 <Grid ColumnDefinitions="*,Auto">
 
                                     <Label Text="{Binding Nombre}" FontAttributes="Bold" TextColor="Black"></Label>
@@ -121,14 +123,14 @@
 
                 </CollectionView>
 
-                <CollectionView ItemsSource="{Binding AvisosGenerales}" IsVisible="{Binding MostrarGenerales}">
+                <CollectionView Margin="10" ItemsSource="{Binding AvisosGenerales}" IsVisible="{Binding MostrarGenerales}">
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="10" Padding="10">
-                                <VerticalStackLayout>
+                            <Border>
+                                <VerticalStackLayout Margin="10,0,10,10">
 
-                                    <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"></Label>
+                                    <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" TextColor="Black"></Label>
 
                                     <Grid ColumnDefinitions="*,Auto">
                                         <Label Text="{Binding NombreMaestro}" FontSize="12" TextColor="Gray"></Label>

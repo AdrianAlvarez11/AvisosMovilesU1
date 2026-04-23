@@ -74,8 +74,8 @@ namespace AvisosAPI.Services
 
             foreach (var a in avisosMapeados)
             {
-                a.IdEstado = null;
-                a.NombreEstado = null;
+                a.IdEstado = 0;
+                a.NombreEstado = "";
             }
 
             return avisosMapeados;
