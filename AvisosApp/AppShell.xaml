@@ -14,10 +14,6 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate views:ProfesorMainView}"
-        Route="homemaestro" />
-    <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="login" />
 
@@ -26,6 +22,11 @@
         ContentTemplate="{DataTemplate views:RegisterView}"
         Route="registrar" />
 
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:ProfesorMainView}"
+        Route="homemaestro" />
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:AlumnosMainView}"

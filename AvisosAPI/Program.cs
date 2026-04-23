@@ -1,11 +1,12 @@
 using AvisosAPI.Models.Entities;
 using AvisosAPI.Repositories;
 using AvisosAPI.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
-using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters.ValidateLifetime = true;
         options.TokenValidationParameters.ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience");
         options.TokenValidationParameters.ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer");
+        options.TokenValidationParameters.RoleClaimType = ClaimTypes.Role;
+
     });
 
 builder.Services.AddAuthorization();

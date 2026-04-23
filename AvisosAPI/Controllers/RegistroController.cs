@@ -45,7 +45,7 @@ namespace AvisosAPI.Controllers
         }
 
         [HttpPost("alumno")]
-        [Authorize(Roles = "Maestro")]
+        [Authorize]
         public IActionResult RegistrarAlumno(AlumnoRegistroDTO dto)
         {
             var result = alumnoValidator.Validate(dto);

@@ -56,8 +56,19 @@ namespace AvisosApp.Services
             return response.IsSuccessStatusCode;
         }
 
+        private async Task SetToken()
+        {
+            var token = await SecureStorage.GetAsync("MiToken");
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            }
+        }
         public async Task<bool> RegistrarAlumno(AlumnoRegistroDTO dto)
         {
+            await SetToken();
             var response = await client.PostAsJsonAsync("api/registro/alumno", dto);
             return response.IsSuccessStatusCode;
         }
