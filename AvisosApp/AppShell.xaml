@@ -27,9 +27,14 @@
     Route="homealumno" />
 
     <ShellContent
-    Title="Registro"
-    ContentTemplate="{DataTemplate views:RegisterView}"
-    Route="registrar" />
+        Title="Registro"
+        ContentTemplate="{DataTemplate views:RegisterView}"
+        Route="registrar" />
+
+    <ShellContent
+        Title="Registro Alumno"
+        ContentTemplate="{DataTemplate views:RegisterAlumnoView}"
+        Route="registrarAlumno" />
 
     <ShellContent
         Title="Home"
@@ -39,4 +44,9 @@
         Title="Home"
         ContentTemplate="{DataTemplate views:AlumnoAvisoPersonalDetallesView}"
         Route="detalleavisopersonal" />
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate views:ProfesorDetalleAvisoGeneralView}"
+        Route="detalleavisogeneral" />
+
 </Shell>

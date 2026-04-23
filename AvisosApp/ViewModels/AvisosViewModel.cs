@@ -17,6 +17,54 @@ namespace AvisosApp.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private string? error;
+        public string? Error
+        {
+            get => error;
+            set
+            {
+                error = value;
+                PropertyChanged?.Invoke(this, new(nameof(Error)));
+                PropertyChanged?.Invoke(this, new(nameof(HayError)));
+            }
+        }
+        
+        public bool HayError => !string.IsNullOrEmpty(Error);
+
+        private string nombreUsuario = "";
+        public string NombreUsuario
+        {
+            get => nombreUsuario;
+            set
+            {
+                nombreUsuario = value;
+                PropertyChanged?.Invoke(this, new(nameof(NombreUsuario)));
+            }
+        }
+
+        private string grupoUsuario = "";
+        public string GrupoUsuario
+        {
+            get => grupoUsuario;
+            set
+            {
+                grupoUsuario = value;
+                PropertyChanged?.Invoke(this, new(nameof(GrupoUsuario)));
+            }
+        }
+
+        private void MostrarError(Exception ex)
+        {
+            if (ex is System.Net.Http.HttpRequestException)
+            {
+                Error = "No se pudo conectar con el servidor. Verifica tu conexión a internet o intenta más tarde.";
+            }
+            else
+            {
+                Error = ex.Message;
+            }
+        }
+
         private string numControl = "";
         public string NumControl
         {
@@ -82,14 +130,32 @@ namespace AvisosApp.ViewModels
         {
             LoginCommand = new Command(Login);
             LogoutCommand = new Command(Logout);
-            VistaRegistrarCommand = new Command(() => Shell.Current.GoToAsync("//registrar"));
-            VistaLoginCommand = new Command(() => Shell.Current.GoToAsync("//login"));
+            VistaRegistrarCommand = new Command(() => 
+            {
+                Error = "";
+                Maestro = new();
+                PropertyChanged?.Invoke(this, new(nameof(Maestro)));
+                Shell.Current.GoToAsync("//registrar");
+            });
+            VistaLoginCommand = new Command(() => 
+            {
+                Error = "";
+                NumControl = "";
+                Contrasena = "";
+                Shell.Current.GoToAsync("//login");
+            });
 
             RegistrarMaestroCommand = new Command(RegistrarMaestro);
             RegistrarAlumnoCommand = new Command(RegistrarAlumno);
 
             CargarGrupoCommand = new Command(CargarGrupo);
-            IrRegistrarAlumnoCommand = new Command(() => Shell.Current.GoToAsync("//registrarAlumno"));
+            IrRegistrarAlumnoCommand = new Command(() => 
+            {
+                Error = "";
+                Alumno = new();
+                PropertyChanged?.Invoke(this, new(nameof(Alumno)));
+                Shell.Current.GoToAsync("//registrarAlumno");
+            });
             VerAlumnoCommand = new Command<int>(GetAlumno);
             EliminarAlumnoCommand = new Command<int>(EliminarAlumno);
 
@@ -97,7 +163,13 @@ namespace AvisosApp.ViewModels
             VerAvisosPersonalesCommand = new Command<int>(VerDetalleAvisosPersonales);
             EliminarAvisosPersonalesCommand = new Command<int>(EliminarAvisosPersonales);
 
-            IrCrearAvisoGeneralCommand = new Command(() => Shell.Current.GoToAsync("crearavisogeneral"));
+            IrCrearAvisoGeneralCommand = new Command(() => 
+            {
+                Error = "";
+                AvisoGeneral = new();
+                PropertyChanged?.Invoke(this, new(nameof(AvisoGeneral)));
+                Shell.Current.GoToAsync("crearavisogeneral");
+            });
             CrearAvisoGeneralCommand = new Command(CrearAvisoGeneral);
 
             IrCrearAvisoPersonalCommand = new Command(CambiarACrearAvisoPersonal);
@@ -139,11 +211,16 @@ namespace AvisosApp.ViewModels
 
         public void CambiarACrearAvisoPersonal()
         {
+            Error = "";
+            AvisoPersonal = new();
+            PropertyChanged?.Invoke(this, new(nameof(AvisoPersonal)));
             Shell.Current.GoToAsync("crearavisopersonal");
         }
         private void Logout()
         {
             service.Logout();
+            NombreUsuario = "";
+            GrupoUsuario = "";
             NumControl = "";
             Contrasena = "";
             Shell.Current.GoToAsync("//login");
@@ -151,25 +228,36 @@ namespace AvisosApp.ViewModels
 
         private async void Login()
         {
-            var response = await service.Login(new LoginDTO
+            try
             {
-                NumControl = NumControl,
-                Contrasena = Contrasena
-            });
+                Error = "";
+                var response = await service.Login(new LoginDTO
+                {
+                    NumControl = NumControl,
+                    Contrasena = Contrasena
+                });
 
-            if (response != null)
+                if (response != null)
+                {
+                    NombreUsuario = response.Nombre;
+                    GrupoUsuario = response.NombreGrupo;
+
+                    if (response.Rol == "Maestro")
+                    {
+                        await Shell.Current.GoToAsync("//homemaestro");
+                        CargarGrupo();
+                    }
+                    else if (response.Rol == "Alumno")
+                    {
+                        await Shell.Current.GoToAsync("//homealumno");
+                        CargarAvisosGeneralesAlumno();
+                        MostrarAvisosGeneralesAlumno = true;
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                if (response.Rol == "Maestro")
-                {
-                    await Shell.Current.GoToAsync("//homemaestro");
-                    CargarGrupo();
-                }
-                else if (response.Rol == "Alumno")
-                {
-                    await Shell.Current.GoToAsync("//homealumno");
-                    CargarAvisosGeneralesAlumno();
-                    MostrarAvisosGeneralesAlumno = true;
-                }
+                MostrarError(ex);
             }
         }
 
@@ -182,21 +270,36 @@ namespace AvisosApp.ViewModels
 
         private async void RegistrarMaestro()
         {
-            var resonse = await service.RegistrarMaestro(Maestro);
+            try
+            {
+                Error = "";
+                var resonse = await service.RegistrarMaestro(Maestro);
 
-            if (resonse)
-                await Shell.Current.GoToAsync("//login");
+                if (resonse)
+                    await Shell.Current.GoToAsync("//login");
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
+            }
         }
 
         private async void RegistrarAlumno()
         {
-            var response = await service.RegistrarAlumno(Alumno);
-
-            if (response)
+            try
             {
-                CargarGrupo();
-                await Shell.Current.GoToAsync("//homemaestro");
+                Error = "";
+                var response = await service.RegistrarAlumno(Alumno);
 
+                if (response)
+                {
+                    CargarGrupo();
+                    await Shell.Current.GoToAsync("//homemaestro");
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
             }
         }
 
@@ -267,12 +370,20 @@ namespace AvisosApp.ViewModels
 
         private async void CrearAvisoPersonal()
         {
-            AvisoPersonal.IdAlumno = AlumnoSeleccionado.Id;
-            var response = await service.Crear(AvisoPersonal);
-            if (response)
+            try
             {
-                CargarAvisosPersonales();
-                await Shell.Current.GoToAsync("//homemaestro");
+                Error = "";
+                AvisoPersonal.IdAlumno = AlumnoSeleccionado.Id;
+                var response = await service.Crear(AvisoPersonal);
+                if (response)
+                {
+                    CargarAvisosPersonales();
+                    await Shell.Current.GoToAsync("//homemaestro");
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
             }
         }
         private async void CargarAvisosPersonales()
@@ -326,11 +437,19 @@ namespace AvisosApp.ViewModels
 
         private async void CrearAvisoGeneral()
         {
-            var response = await service.Crear(AvisoGeneral);
-            if (response)
+            try
             {
-                CargarAvisosGenerales();
-                await Shell.Current.GoToAsync("//homemaestro");
+                Error = "";
+                var response = await service.Crear(AvisoGeneral);
+                if (response)
+                {
+                    CargarAvisosGenerales();
+                    await Shell.Current.GoToAsync("//homemaestro");
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex);
             }
         }
         

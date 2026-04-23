@@ -21,10 +21,32 @@ namespace AvisosApp.Services
             };
         }
 
+        private async Task VerificarError(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                if (error.StartsWith("[") && error.EndsWith("]"))
+                {
+                    try
+                    {
+                        var errores = System.Text.Json.JsonSerializer.Deserialize<List<string>>(error);
+                        if (errores != null && errores.Count > 0)
+                        {
+                            error = string.Join(Environment.NewLine, errores);
+                        }
+                    }
+                    catch { }
+                }
+                throw new Exception(error);
+            }
+        }
+
         // AUTH
         public async Task<LoginResponseDTO?> Login(LoginDTO dto)
         {
             var response = await client.PostAsJsonAsync("api/auth", dto);
+            await VerificarError(response);
 
             if (response.IsSuccessStatusCode)
             {
@@ -53,6 +75,7 @@ namespace AvisosApp.Services
         public async Task<bool> RegistrarMaestro(MaestroRegistroDTO dto)
         {
             var response = await client.PostAsJsonAsync("api/registro/maestro", dto);
+            await VerificarError(response);
             return response.IsSuccessStatusCode;
         }
 
@@ -70,6 +93,7 @@ namespace AvisosApp.Services
         {
             await SetToken();
             var response = await client.PostAsJsonAsync("api/registro/alumno", dto);
+            await VerificarError(response);
             return response.IsSuccessStatusCode;
         }
 
@@ -139,6 +163,7 @@ namespace AvisosApp.Services
         {
             await SetToken();
             var response = await client.PostAsJsonAsync("api/avisospersonales", dto);
+            await VerificarError(response);
             return response.IsSuccessStatusCode;
         }
 
@@ -217,6 +242,7 @@ namespace AvisosApp.Services
             await SetToken();
 
             var response = await client.PostAsJsonAsync("api/avisosgenerales", dto);
+            await VerificarError(response);
             return response.IsSuccessStatusCode;
         }
 

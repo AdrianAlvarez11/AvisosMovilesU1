@@ -15,7 +15,7 @@
                 <Label HorizontalOptions="Fill" TextColor="Black" VerticalOptions="Center" FontFamily="Verdana" Text="Fecha de expiración:" Margin="10, 10, 10, 0"></Label>
                 <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#a3b18a" Date="{Binding AvisoGeneral.FechaExpira}" Margin="10, 10, 10, 0"></DatePicker>
             </Grid>
-            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce datos validos"></Label>
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
             <Button Text="Crear" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
         </VerticalStackLayout>
     </Grid>

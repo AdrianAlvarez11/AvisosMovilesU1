@@ -13,7 +13,7 @@
             <Button FontFamily="Verdana" Grid.Column="1" Text="Registrar" Command="{Binding VistaRegistrarCommand}" TextColor="#344e41" Padding="0,0,5,0"
                     BackgroundColor="Transparent" VerticalOptions="Center"></Button>
         </Grid>
-        <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce un correo y/o clave validos."></Label>
+        <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
 
         <Button Text="Iniciar sesión" Command="{Binding LoginCommand}" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
     </VerticalStackLayout>

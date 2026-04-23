@@ -8,8 +8,8 @@
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="auto, *">
         <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
-            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Adrian Alvarez " FontSize="20"/>
-            <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="3.2" FontSize="20" HorizontalOptions="End"/>
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding NombreUsuario}" FontSize="20"/>
+            <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding GrupoUsuario}" FontSize="20" HorizontalOptions="End"/>
 
         </Grid>
 
