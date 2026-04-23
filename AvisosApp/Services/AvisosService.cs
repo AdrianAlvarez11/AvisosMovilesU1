@@ -158,6 +158,7 @@ namespace AvisosApp.Services
         // Avisos Generales
         public async Task<List<AvisoGeneralResumenDTO>> GetAvisos()
         {
+            await SetToken();
             var response = await client.GetAsync("api/avisosgenerales");
 
             if (response.IsSuccessStatusCode)
@@ -194,6 +195,8 @@ namespace AvisosApp.Services
 
         public async Task<bool> Crear(AvisoGeneralCreateDTO dto)
         {
+            await SetToken();
+
             var response = await client.PostAsJsonAsync("api/avisosgenerales", dto);
             return response.IsSuccessStatusCode;
         }
