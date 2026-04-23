@@ -97,10 +97,10 @@ namespace AvisosApp.ViewModels
             VerAvisosPersonalesCommand = new Command<int>(VerDetalleAvisosPersonales);
             EliminarAvisosPersonalesCommand = new Command<int>(EliminarAvisosPersonales);
 
-            IrCrearAvisoGeneralCommand = new Command(() => Shell.Current.GoToAsync("//crearavisogeneral"));
+            IrCrearAvisoGeneralCommand = new Command(() => Shell.Current.GoToAsync("crearavisogeneral"));
             CrearAvisoGeneralCommand = new Command(CrearAvisoGeneral);
 
-            IrCrearAvisoPersonalCommand = new Command(() => Shell.Current.GoToAsync("//crearavisopersonal"));
+            IrCrearAvisoPersonalCommand = new Command(CambiarACrearAvisoPersonal);
             CrearAvisoPersonalCommand = new Command(CrearAvisoPersonal);
 
             CargarAvisosGeneralesCommand = new Command(CargarAvisosGenerales);
@@ -137,6 +137,10 @@ namespace AvisosApp.ViewModels
             });
         }
 
+        public void CambiarACrearAvisoPersonal()
+        {
+            Shell.Current.GoToAsync("crearavisopersonal");
+        }
         private void Logout()
         {
             service.Logout();
@@ -228,10 +232,10 @@ namespace AvisosApp.ViewModels
         {
             var alumno = await service.GetAlumno(id);
             if (alumno != null)
-            {
+            {  
                 AlumnoSeleccionado = alumno;
                 PropertyChanged?.Invoke(this, new(nameof(AlumnoSeleccionado)));
-                await Shell.Current.GoToAsync("//detallesalumnos");
+                await Shell.Current.GoToAsync("detallesalumnos");
 
             }
         }
