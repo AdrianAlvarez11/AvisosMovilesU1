@@ -83,7 +83,7 @@ namespace AvisosAPI.Services
                 new Claim(ClaimTypes.Name, Nombre),
             };
 
-            var key = configuration.GetValue<string>("Jwt:SecretKey");
+            var key = configuration.GetValue<string>("Jwt:Key");
 
 
             
