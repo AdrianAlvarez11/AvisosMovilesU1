@@ -16,35 +16,18 @@
         Title="Home"
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="login" />
+    <ShellContent
+    Title="Home"
+    ContentTemplate="{DataTemplate views:ProfesorMainView}"
+    Route="homemaestro" />
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:RegisterView}"
-        Route="registrar" />
+    Title="Home"
+    ContentTemplate="{DataTemplate views:AlumnosMainView}"
+    Route="homealumno" />
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:ProfesorMainView}"
-        Route="homemaestro" />
-    
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:AlumnosMainView}"
-        Route="homealumno" />
-    <ShellContent
-                Title="Home"
-        ContentTemplate="{DataTemplate views:RegisterAlumnoView}"
-        Route="registrarAlumno" />
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:ProfesorCrearAvisoGeneralView}"
-        Route="crearavisogeneral" />
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:ProfesorCrearAvisoPersonalView}"
-        Route="crearavisopersonal" />
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:ProfesorDetallesAlumnosView}"
-        Route="detallesalumnos" />
+    Title="Registro"
+    ContentTemplate="{DataTemplate views:RegisterView}"
+    Route="registrar" />
 </Shell>
