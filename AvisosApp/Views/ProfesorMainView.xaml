@@ -88,7 +88,10 @@
         <Button Text="+" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="BlueViolet" TextColor="White"
             FontSize="24" WidthRequest="60" HeightRequest="60" CornerRadius="30" HorizontalOptions="End" VerticalOptions="End"
             Margin="20" IsVisible="{Binding MostrarGrupo}"></Button>
-        
+        <Button Text="Crear Aviso General" Command="{Binding IrCrearAvisoGeneralCommand}" Grid.RowSpan="3" BackgroundColor="BlueViolet" TextColor="White"
+            FontSize="24" WidthRequest="100" HeightRequest="40" CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
+            Margin="20" IsVisible="{Binding MostrarGenerales}"></Button>
+
         <ScrollView Grid.Row="1">
             <VerticalStackLayout>
 

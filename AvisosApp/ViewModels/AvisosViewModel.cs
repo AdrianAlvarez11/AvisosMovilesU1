@@ -61,6 +61,9 @@ namespace AvisosApp.ViewModels
             VerAvisosPersonalesCommand = new Command<int>(VerDetalleAvisosPersonales);
             EliminarAvisosPersonalesCommand = new Command<int>(EliminarAvisosPersonales);
 
+            IrCrearAvisoGeneralCommand = new Command(() => Shell.Current.GoToAsync("//crearavisogeneral"));
+            CrearAvisoGeneralCommand = new Command(CrearAvisoGeneral);
+
             CargarAvisosGeneralesCommand = new Command(CargarAvisosGenerales);
             VerAvisosGeneralesCommand = new Command<int>(VerDetalleAvisosGenerales);
             EliminarAvisosGeneralesCommand = new Command<int>(EliminarAvisosGenerales);
@@ -140,6 +143,7 @@ namespace AvisosApp.ViewModels
         public AlumnoDetalleDTO? AlumnoSeleccionado { get; set; }
 
         public ICommand IrRegistrarAlumnoCommand { get; set; }
+        public ICommand IrCrearAvisoGeneralCommand { get; set; }
         public ICommand CargarGrupoCommand { get; set; }
         public ICommand VerAlumnoCommand { get; set; }
         public ICommand EliminarAlumnoCommand { get; set; }
@@ -227,12 +231,23 @@ namespace AvisosApp.ViewModels
 
         public ObservableCollection<AvisoGeneralResumenDTO> AvisosGenerales { get; set; } = new();
         private List<AvisoGeneralResumenDTO> listaGeneral = new();
-
+        public AvisoGeneralCreateDTO AvisoGeneral { get; set; } = new();
         public AvisoGeneralDetalleMaestroDTO? SeleccionadoGeneral { get; set; }
 
+        public ICommand CrearAvisoGeneralCommand { get; set; }
         public ICommand CargarAvisosGeneralesCommand { get; set; }
         public ICommand VerAvisosGeneralesCommand { get; set; }
         public ICommand EliminarAvisosGeneralesCommand { get; set; }
+
+        private async void CrearAvisoGeneral()
+        {
+            var response = await service.Crear(AvisoGeneral);
+            if (response)
+            {
+                CargarAvisosGenerales();
+                await Shell.Current.GoToAsync("//homemaestro");
+            }
+        }
         private async void CargarAvisosGenerales()
         {
 

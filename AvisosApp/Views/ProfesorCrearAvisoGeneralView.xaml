@@ -6,13 +6,13 @@
 
     <VerticalStackLayout VerticalOptions="Center">
         <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Crear Aviso General" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
-        <Entry FontFamily="Verdana" Placeholder="Titulo" Background="#91C8E4"  Margin="10, 10, 10, 0"></Entry>
-        <Entry FontFamily="Verdana" Placeholder="Contenido" Background="#91C8E4" Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Titulo" Background="#91C8E4" Text="{Binding AvisoGeneral.Titulo}" Margin="10, 10, 10, 0"></Entry>
+        <Entry FontFamily="Verdana" Placeholder="Contenido" Background="#91C8E4" Text="{Binding AvisoGeneral.Contenido}" Margin="10, 10, 10, 0"></Entry>
         <Grid ColumnDefinitions="auto,*">
             <Label HorizontalOptions="Fill" TextColor="Black" VerticalOptions="Center" FontFamily="Verdana" Text="Fecha de expiración:" Margin="10, 10, 10, 0"></Label>
-            <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#91C8E4" Margin="10, 10, 10, 0"></DatePicker>
+            <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#91C8E4" Date="{Binding AvisoGeneral.FechaExpira}" Margin="10, 10, 10, 0"></DatePicker>
         </Grid>
         <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Black" Text="Introduce datos validos"></Label>
-        <Button Text="Crear" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
+        <Button Text="Crear" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
     </VerticalStackLayout>
 </ContentPage>
