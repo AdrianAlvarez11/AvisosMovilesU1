@@ -159,7 +159,7 @@ namespace AvisosApp.Services
         public async Task<List<AvisoGeneralResumenDTO>> GetAvisos()
         {
             await SetToken();
-            var response = await client.GetAsync("api/avisosgenerales");
+            var response = await client.GetAsync("api/avisosgenerales/maestro");
 
             if (response.IsSuccessStatusCode)
             {

@@ -39,7 +39,7 @@ namespace AvisosAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("maestro")]
         [Authorize(Roles = "Maestro")]
         public IActionResult GetVigentesMaestro()
         {
