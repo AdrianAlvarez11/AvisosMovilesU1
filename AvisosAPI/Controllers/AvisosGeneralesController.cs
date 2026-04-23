@@ -39,6 +39,25 @@ namespace AvisosAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Maestro")]
+        public IActionResult GetVigentesMaestro()
+        {
+            try
+            {
+                var avisos = service.GetVigentesMaestro();
+                return Ok(avisos);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpGet("alumno/{idAviso}")]
         [Authorize(Roles = "Alumno")]

@@ -57,6 +57,30 @@ namespace AvisosAPI.Services
             return avisosMapeados;
         }
 
+        //lista de resumen para maestro
+        public List<AvisoGeneralResumenDTO> GetVigentesMaestro()
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var avisos = avisoRepository.Query()
+                .Include(x => x.IdMaestroNavigation)
+                .Where(x => x.IdMaestro == idMaestro 
+                         && x.FechaExpira > DateTime.Now 
+                         && x.Eliminado == false)
+                .OrderByDescending(x => x.FechaEnviado)
+                .ToList();
+
+            var avisosMapeados = avisos.Select(x => mapper.Map<AvisoGeneralResumenDTO>(x)).ToList();
+
+            foreach (var a in avisosMapeados)
+            {
+                a.IdEstado = null;
+                a.NombreEstado = null;
+            }
+
+            return avisosMapeados;
+        }
+
 
         // ver detalle y registrar lectura (alumno)
         public AvisoGeneralDetalleAlumnoDTO GetDetalleAlumno(int idAviso)
