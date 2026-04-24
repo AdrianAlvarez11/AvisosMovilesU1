@@ -67,6 +67,29 @@ namespace AvisosAPI.Controllers
             }
         }
 
+        [HttpGet("maestro/{idAviso}")]
+        [Authorize(Roles = "Maestro")]
+        public IActionResult GetDetalleMaestro(int idAviso)
+        {
+            try
+            {
+                var aviso = service.GetDetalleMaestro(idAviso);
+                return Ok(aviso);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         [Authorize(Roles = "Maestro")]
         public IActionResult Post(AvisoPersonalCreateDTO dto)

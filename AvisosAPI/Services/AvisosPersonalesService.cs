@@ -74,6 +74,21 @@ namespace AvisosAPI.Services
             return mapper.Map<AvisoPersonalDetalleDTO>(aviso);
         }
 
+        public AvisoPersonalDetalleDTO GetDetalleMaestro(int idAviso)
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var aviso = avisoRepository.Query()
+                .Include(x => x.IdMaestroNavigation)
+                .Include(x => x.IdEstadoNavigation)
+                .FirstOrDefault(x => x.Id == idAviso && x.IdMaestro == idMaestro && x.Eliminado == false);
+
+            if (aviso == null)
+                throw new KeyNotFoundException("Aviso no encontrado.");
+
+            return mapper.Map<AvisoPersonalDetalleDTO>(aviso);
+        }
+
         //  Maestro: enviar aviso a un alumno 
         public void Crear(AvisoPersonalCreateDTO dto)
         {

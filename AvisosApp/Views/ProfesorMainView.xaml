@@ -89,7 +89,7 @@
         <Button Text="Crear Alumno" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
             FontSize="18" WidthRequest="150" CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
             Margin="10" IsVisible="{Binding MostrarGrupo}"></Button>
-        <Button Text="Crear Aviso General" Command="{Binding IrCrearAvisoGeneralCommand}" Grid.RowSpan="3" BackgroundColor="BlueViolet" TextColor="White"
+        <Button Text="Crear Aviso General" Command="{Binding IrCrearAvisoGeneralCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
             FontSize="18" WidthRequest="200"  CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
             Margin="10" IsVisible="{Binding MostrarGenerales}"></Button>
 

@@ -159,6 +159,19 @@ namespace AvisosApp.Services
             return null;
         }
 
+        public async Task<AvisoPersonalDetalleDTO?> GetDetalleAvisoPersonalMaestro(int idAviso)
+        {
+            await SetToken();
+            var response = await client.GetAsync($"api/avisospersonales/maestro/{idAviso}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<AvisoPersonalDetalleDTO>();
+            }
+
+            return null;
+        }
+
         public async Task<bool> Crear(AvisoPersonalCreateDTO dto)
         {
             await SetToken();

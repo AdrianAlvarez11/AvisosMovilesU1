@@ -27,7 +27,7 @@
 
                             <Border Margin="10" Padding="10" >
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAvisosPersonalesCommand}"
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAvisosPersonalesMaestroCommand}"
                                         CommandParameter="{Binding Id}" />
                                 </Border.GestureRecognizers>
                                 <Grid RowDefinitions="auto,.1*,auto">
