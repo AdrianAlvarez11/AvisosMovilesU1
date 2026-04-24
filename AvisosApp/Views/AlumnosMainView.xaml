@@ -4,6 +4,7 @@
              x:Class="AvisosApp.Views.AlumnosMainView"
              Title="AlumnosMainView" Background="#dad7cd">
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refrescar" Order="Secondary" Command="{Binding RefrescarAvisosAlumnoCommand}" />
         <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="auto, *">

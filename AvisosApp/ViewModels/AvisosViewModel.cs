@@ -143,6 +143,7 @@ namespace AvisosApp.ViewModels
         }
         public ICommand CambiarAGeneralesAlumnoCommand { get; set; }
         public ICommand CambiarAPersonalesAlumnoCommand { get; set; }
+        public ICommand RefrescarAvisosAlumnoCommand { get; set; }
 
         public ICommand CambiarAGrupoCommand { get; set; }
         public ICommand CambiarAGeneralesCommand { get; set; }
@@ -228,6 +229,18 @@ namespace AvisosApp.ViewModels
             {
                 MostrarAvisosGeneralesAlumno = false;
                 CargarAvisosPersonales();
+            });
+
+            RefrescarAvisosAlumnoCommand = new Command(() =>
+            {
+                if (MostrarAvisosGeneralesAlumno)
+                {
+                    CargarAvisosGeneralesAlumno();
+                }
+                else
+                {
+                    CargarAvisosPersonales();
+                }
             });
         }
 
