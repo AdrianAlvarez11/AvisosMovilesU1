@@ -17,6 +17,17 @@ namespace AvisosApp.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get => isBusy;
+            set
+            {
+                isBusy = value;
+                PropertyChanged?.Invoke(this, new(nameof(IsBusy)));
+            }
+        }
+
         private string? error;
         public string? Error
         {
@@ -265,6 +276,7 @@ namespace AvisosApp.ViewModels
         {
             try
             {
+                IsBusy = true;
                 Error = "";
                 var response = await service.Login(new LoginDTO
                 {
@@ -293,6 +305,10 @@ namespace AvisosApp.ViewModels
             catch (Exception ex)
             {
                 MostrarError(ex);
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 
