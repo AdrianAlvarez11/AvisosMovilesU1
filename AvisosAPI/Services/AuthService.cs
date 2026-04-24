@@ -92,7 +92,7 @@ namespace AvisosAPI.Services
                 issuer: configuration.GetValue<string>("Jwt:Issuer"),
                 audience: configuration.GetValue<string>("Jwt:Audience"),
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(5),
+                expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key ?? "")), SecurityAlgorithms.HmacSha256)
 );
 

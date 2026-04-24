@@ -214,7 +214,7 @@ namespace AvisosApp.ViewModels
                 Error = "";
                 AvisoGeneral = new();
                 PropertyChanged?.Invoke(this, new(nameof(AvisoGeneral)));
-                Shell.Current.GoToAsync("///crearavisogeneral");
+                Shell.Current.GoToAsync("crearavisogeneral");
             });
             CrearAvisoGeneralCommand = new Command(CrearAvisoGeneral);
 
@@ -272,7 +272,7 @@ namespace AvisosApp.ViewModels
             Error = "";
             AvisoPersonal = new();
             PropertyChanged?.Invoke(this, new(nameof(AvisoPersonal)));
-            Shell.Current.GoToAsync("///crearavisopersonal");
+            Shell.Current.GoToAsync("crearavisopersonal");
         }
         private void Logout()
         {
@@ -417,6 +417,10 @@ namespace AvisosApp.ViewModels
 
                 if (alumno != null)
                     Alumnos.Remove(alumno);
+
+                CargarGrupo();
+                await Shell.Current.GoToAsync("//homemaestro");
+
             }
         }
 

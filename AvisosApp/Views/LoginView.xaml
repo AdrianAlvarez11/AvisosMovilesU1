@@ -16,7 +16,7 @@
             </Grid>
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
 
-            <Button Text="Iniciar sesión" Command="{Binding LoginCommand}" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
+            <Button Text="Iniciar sesión" TextColor="White" Command="{Binding LoginCommand}" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
         </VerticalStackLayout>
 
         <!-- Loading Overlay -->

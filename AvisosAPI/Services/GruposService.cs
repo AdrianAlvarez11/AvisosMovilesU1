@@ -31,7 +31,7 @@ namespace AvisosAPI.Services
             var idMaestro = ObtenerIdDesdeToken();
 
             var grupo = grupoRepository.Query()
-                .Include(x => x.Alumno)
+                .Include(x => x.Alumno.Where(c=>c.Eliminado == false))
                 .FirstOrDefault(x => x.IdMaestro == idMaestro);
 
             if (grupo == null)

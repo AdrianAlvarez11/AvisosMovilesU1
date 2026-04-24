@@ -12,7 +12,7 @@
             <Entry FontFamily="Verdana" Placeholder="Titulo" Background="#a3b18a" Text="{Binding AvisoPersonal.Titulo}"  Margin="10, 10, 10, 0"></Entry>
             <Entry FontFamily="Verdana" Placeholder="Contenido" Background="#a3b18a" Text="{Binding AvisoPersonal.Contenido}" Margin="10, 10, 10, 0"></Entry>
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
-            <Button Text="Crear" FontFamily="Verdana" Command="{Binding CrearAvisoPersonalCommand}" Margin="10, 10, 10, 0"></Button>
+            <Button Text="Crear" TextColor="White" FontFamily="Verdana" Command="{Binding CrearAvisoPersonalCommand}" Margin="10, 10, 10, 0"></Button>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

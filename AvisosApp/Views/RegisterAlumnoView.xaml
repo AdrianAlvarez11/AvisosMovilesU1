@@ -17,7 +17,7 @@
             </Grid>-->
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
 
-            <Button Text="Registrar" Command="{Binding RegistrarAlumnoCommand}" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
+            <Button Text="Registrar" TextColor="White" Command="{Binding RegistrarAlumnoCommand}" FontFamily="Verdana" Margin="10, 10, 10, 0"></Button>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

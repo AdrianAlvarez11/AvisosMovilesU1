@@ -16,7 +16,7 @@
                 <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#a3b18a" Date="{Binding AvisoGeneral.FechaExpira}" Margin="10, 10, 10, 0"></DatePicker>
             </Grid>
             <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
-            <Button Text="Crear" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
+            <Button Text="Crear" TextColor="White" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
