@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AvisosApp.Views.ProfesorCrearAvisoGeneralView"
+             Title="" Background="#dad7cd">
+
+    <Grid RowDefinitions="auto, *">
+        <Button Text="← Cancelar / Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center">
+            <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Crear Aviso General" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
+            <Entry FontFamily="Verdana" Placeholder="Titulo" Text="{Binding AvisoGeneral.Titulo}" Background="#a3b18a"  Margin="10, 10, 10, 0"></Entry>
+            <Entry FontFamily="Verdana" Placeholder="Contenido" Text="{Binding AvisoGeneral.Contenido}" Background="#a3b18a" Margin="10, 10, 10, 0"></Entry>
+            <Grid ColumnDefinitions="auto,*">
+                <Label HorizontalOptions="Fill" TextColor="Black" VerticalOptions="Center" FontFamily="Verdana" Text="Fecha de expiración:" Margin="10, 10, 10, 0"></Label>
+                <DatePicker Grid.Column="1" HorizontalOptions="End" FontFamily="Verdana" Background="#a3b18a" Date="{Binding AvisoGeneral.FechaExpira}" Margin="10, 10, 10, 0"></DatePicker>
+            </Grid>
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" TextColor="Red" Text="{Binding Error}" IsVisible="{Binding HayError}"></Label>
+            <Button Text="Crear" TextColor="White" FontFamily="Verdana" Margin="10, 10, 10, 0" Command="{Binding CrearAvisoGeneralCommand}"></Button>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

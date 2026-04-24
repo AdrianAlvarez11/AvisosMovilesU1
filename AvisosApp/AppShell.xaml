@@ -4,11 +4,39 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AvisosApp"
+    xmlns:views="clr-namespace:AvisosApp.Views"
+    xmlns:viewmodels="clr-namespace:AvisosApp.ViewModels"
+    Shell.BackgroundColor="#344e41"
+    Shell.ForegroundColor="White"
+    FlyoutBehavior="Disabled"
     Title="AvisosApp">
+
+    <Shell.BindingContext>
+        <viewmodels:AvisosViewModel></viewmodels:AvisosViewModel>
+    </Shell.BindingContext>
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="login" />
+    <ShellContent
+    Title="Home"
+    ContentTemplate="{DataTemplate views:ProfesorMainView}"
+    Route="homemaestro" />
+
+    <ShellContent
+    Title="Home"
+    ContentTemplate="{DataTemplate views:AlumnosMainView}"
+    Route="homealumno" />
+
+    <ShellContent
+        Title="Registro"
+        ContentTemplate="{DataTemplate views:RegisterView}"
+        Route="registrar" />
+
+    <ShellContent
+        Title="Registro Alumno"
+        ContentTemplate="{DataTemplate views:RegisterAlumnoView}"
+        Route="registrarAlumno" />
 
 </Shell>

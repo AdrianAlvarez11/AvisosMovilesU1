@@ -1,17 +1,64 @@
+using AvisosAPI.Models.Entities;
+using AvisosAPI.Repositories;
+using AvisosAPI.Services;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<AvisosEscolaresContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(
+            builder.Configuration.GetConnectionString("DefaultConnection"))));
 
+
+builder.Services.AddScoped(typeof(Repository<>));
+
+builder.Services.AddAutoMapper(x=> { }, typeof(Program).Assembly);
+
+builder.Services.AddHttpContextAccessor();  // necesario para leer claims en servicios
+
+builder.Services.AddScoped<RegistroService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<AvisosPersonalesService>();
+builder.Services.AddScoped<AvisosGeneralesService>();
+builder.Services.AddScoped<GruposService>();
+
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+
+var jwtKey = builder.Configuration["Jwt:Key"]!;
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters.IssuerSigningKey =
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key") ?? ""));
+        options.TokenValidationParameters.ValidateAudience = true;
+        options.TokenValidationParameters.ValidateIssuer = true;
+        options.TokenValidationParameters.ValidateLifetime = true;
+        options.TokenValidationParameters.ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience");
+        options.TokenValidationParameters.ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer");
+        options.TokenValidationParameters.RoleClaimType = ClaimTypes.Role;
+
+    });
+
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

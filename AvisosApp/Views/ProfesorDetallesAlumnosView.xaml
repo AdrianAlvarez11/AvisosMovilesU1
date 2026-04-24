@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:AvisosApp.ViewModels"
+             x:Class="AvisosApp.Views.ProfesorDetallesAlumnosView"
+             Title="" Background="#dad7cd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="auto,auto, *">
+        <Button Text="← Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
+        <Button FontFamily="Verdana" Text="Eliminar alumno" BackgroundColor="#3a5a40" TextColor="White" FontSize="12" HorizontalOptions="End" Margin="10" Command="{Binding EliminarAlumnoCommand}" CommandParameter="{Binding AlumnoSeleccionado.Id}"></Button>
+
+        <Border Margin="10" Padding="5" Grid.Row="1">
+            
+            <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+                <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.Nombre}" FontSize="20"/>
+                <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.NumControl}" FontSize="20" HorizontalOptions="End"/>
+            </Grid>
+        </Border>
+        <Button Text="Crear Aviso Personal" Command="{Binding IrCrearAvisoPersonalCommand}" Grid.RowSpan="3" ZIndex="10" BackgroundColor="#3a5a40" TextColor="White"
+            FontSize="18" WidthRequest="210"  CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
+            Margin="10"></Button>
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout>
+                <CollectionView Margin="10" ItemsSource="{Binding AlumnoSeleccionado.Avisos}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border Margin="10" Padding="10" >
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAvisosPersonalesMaestroCommand}"
+                                        CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
+                                <Grid RowDefinitions="auto,.1*,auto">
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                                        <Label FontFamily="Verdana" Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                                    </Grid>
+                                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowDefinitions=".1*,.1*" RowSpacing="10" Margin="0,10,0,0">
+                                        <Label FontFamily="Verdana" Text="Enviado: " FontSize="12" TextColor="Gray"></Label>
+                                        <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding FechaEnviado, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                                        <Label FontFamily="Verdana" Grid.Row="1" Text="Estado:" FontSize="12" TextColor="Gray"></Label>
+                                        <Label FontFamily="Verdana" Grid.Row="1" Grid.Column="1" Text="{Binding NombreEstado}" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
