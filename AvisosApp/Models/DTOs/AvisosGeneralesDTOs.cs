@@ -58,7 +58,7 @@
     {
         public string Titulo { get; set; } = null!;
         public string Contenido { get; set; } = null!;
-        public DateTime FechaExpira { get; set; }
+        public DateTime FechaExpira { get; set; } = DateTime.Today;
     }
 
 }

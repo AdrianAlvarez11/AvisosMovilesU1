@@ -142,13 +142,13 @@
                                     <Grid ColumnDefinitions="*,Auto">
                                         <Label Text="{Binding NombreMaestro, StringFormat='Enviado por: {0}'}" FontSize="12" TextColor="Gray"></Label>
 
-                                        <Label Grid.Column="1" Text="{Binding FechaEnviado}" FontSize="12" TextColor="Gray"></Label>
+                                        <Label Grid.Column="1" Text="{Binding FechaEnviado, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray"></Label>
                                     </Grid>
 
                                     <Grid ColumnDefinitions="*,Auto">
                                         <Label Text="Expira:" FontSize="12" TextColor="Gray"/>
 
-                                        <Label Grid.Column="1" Text="{Binding FechaExpira}" FontSize="12" TextColor="Gray"></Label>
+                                        <Label Grid.Column="1" Text="{Binding FechaExpira, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray"></Label>
                                     </Grid>
 
                                 </VerticalStackLayout>

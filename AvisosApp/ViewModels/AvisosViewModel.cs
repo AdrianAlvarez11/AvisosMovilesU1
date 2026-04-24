@@ -475,7 +475,7 @@ namespace AvisosApp.ViewModels
                 AvisoSeleccionado = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(AvisoSeleccionado)));
 
-                await Shell.Current.GoToAsync("///detalleavisopersonal");
+                await Shell.Current.GoToAsync("detalleavisopersonal");
             }
         }
 
@@ -487,7 +487,7 @@ namespace AvisosApp.ViewModels
                 AvisoSeleccionado = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(AvisoSeleccionado)));
 
-                await Shell.Current.GoToAsync("///detalleavisopersonalmaestro");
+                    await Shell.Current.GoToAsync("detalleavisopersonalmaestro");
             }
         }
 
@@ -574,7 +574,7 @@ namespace AvisosApp.ViewModels
                 HayLeidosGenerales = aviso.Leidos != null && aviso.Leidos.Count > 0;
                 HayPendientesGenerales = aviso.PendientesLectura != null && aviso.PendientesLectura.Count > 0;
 
-                await Shell.Current.GoToAsync("//detalleavisogeneral");
+                await Shell.Current.GoToAsync("detalleavisogeneral");
             }
         }
         
@@ -586,7 +586,7 @@ namespace AvisosApp.ViewModels
                 SeleccionadoGeneralAlumno = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(SeleccionadoGeneralAlumno)));
 
-                await Shell.Current.GoToAsync("//detalleavisoalumno");
+                await Shell.Current.GoToAsync("detalleavisoalumno");
             }
         }
 

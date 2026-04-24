@@ -10,7 +10,7 @@ namespace AvisosApp.Services
 {
     public class AvisosService
     {
-        string baseUrl = "https://localhost:7044/";
+        string baseUrl = "https://avisosapi.duckdns.org/";
         HttpClient client;
 
         public AvisosService()
