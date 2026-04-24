@@ -436,7 +436,12 @@ namespace AvisosApp.ViewModels
             if (response)
             {
                 var aviso = Avisos.FirstOrDefault(x => x.Id == id);
-                if (aviso != null) Avisos.Remove(aviso);
+
+                if (aviso != null) 
+                    Avisos.Remove(aviso);
+
+                GetAlumno(AlumnoSeleccionado.Id);
+
             }
         }
 
