@@ -54,9 +54,9 @@ namespace AvisosAPI.Services
 
             var alumno = alumnoRepository.Query()
                 .Include(x => x.IdGrupoNavigation)
-                .Include(x => x.Avisopersonal)
+                .Include(x => x.Avisopersonal.Where(x=>x.Eliminado == false))
                     .ThenInclude(x => x.IdMaestroNavigation)
-                .Include(x => x.Avisopersonal)
+                .Include(x => x.Avisopersonal.Where(x=>x.Eliminado == false))
                     .ThenInclude(x => x.IdEstadoNavigation)
                 .FirstOrDefault(x => x.Id == idAlumno && x.IdGrupo == grupo.Id && x.Eliminado == false);
 

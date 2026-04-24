@@ -64,8 +64,7 @@ namespace AvisosAPI.Services
 
             var avisos = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
-                .Where(x => x.IdMaestro == idMaestro 
-                         && x.FechaExpira > DateTime.Now 
+                .Where(x => x.FechaExpira > DateTime.Now 
                          && x.Eliminado == false)
                 .OrderByDescending(x => x.FechaEnviado)
                 .ToList();
@@ -133,7 +132,6 @@ namespace AvisosAPI.Services
             var aviso = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
                 .FirstOrDefault(x => x.Id == idAviso
-                                  && x.IdMaestro == idMaestro
                                   && x.Eliminado == false);
 
             if (aviso == null)
