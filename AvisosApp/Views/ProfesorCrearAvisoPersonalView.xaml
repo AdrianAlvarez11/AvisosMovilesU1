@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AvisosApp.Views.ProfesorCrearAvisoPersonalView"
-             Title="ProfesorCrearAvisoPersonalView" Background="#dad7cd">
+             Title="" Background="#dad7cd">
 
     <Grid RowDefinitions="auto, *">
         <Button Text="← Cancelar / Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>

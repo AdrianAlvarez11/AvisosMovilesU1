@@ -202,7 +202,7 @@ namespace AvisosApp.ViewModels
                 Error = "";
                 AvisoGeneral = new();
                 PropertyChanged?.Invoke(this, new(nameof(AvisoGeneral)));
-                Shell.Current.GoToAsync("crearavisogeneral");
+                Shell.Current.GoToAsync("///crearavisogeneral");
             });
             CrearAvisoGeneralCommand = new Command(CrearAvisoGeneral);
 
@@ -260,7 +260,7 @@ namespace AvisosApp.ViewModels
             Error = "";
             AvisoPersonal = new();
             PropertyChanged?.Invoke(this, new(nameof(AvisoPersonal)));
-            Shell.Current.GoToAsync("crearavisopersonal");
+            Shell.Current.GoToAsync("///crearavisopersonal");
         }
         private void Logout()
         {
@@ -389,7 +389,7 @@ namespace AvisosApp.ViewModels
             {  
                 AlumnoSeleccionado = alumno;
                 PropertyChanged?.Invoke(this, new(nameof(AlumnoSeleccionado)));
-                await Shell.Current.GoToAsync("detallesalumnos");
+                await Shell.Current.GoToAsync("///detallesalumnos");
 
             }
         }
@@ -457,7 +457,7 @@ namespace AvisosApp.ViewModels
                 AvisoSeleccionado = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(AvisoSeleccionado)));
 
-                await Shell.Current.GoToAsync("detalleavisopersonal");
+                await Shell.Current.GoToAsync("///detalleavisopersonal");
             }
         }
 
@@ -469,7 +469,7 @@ namespace AvisosApp.ViewModels
                 AvisoSeleccionado = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(AvisoSeleccionado)));
 
-                await Shell.Current.GoToAsync("detalleavisopersonalmaestro");
+                await Shell.Current.GoToAsync("///detalleavisopersonalmaestro");
             }
         }
 

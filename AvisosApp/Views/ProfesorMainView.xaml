@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:AvisosApp.ViewModels"
              x:Class="AvisosApp.Views.ProfesorMainView"
-             Title="ProfesorMainView" Background="#dad7cd">
+             Title="" Background="#dad7cd">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
@@ -96,12 +96,13 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout>
 
-                <Grid ColumnDefinitions="*,*"
-                      Margin="10">
+                <Grid ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
 
-                    <Button Text="Mi Grupo" Command="{Binding CambiarAGrupoCommand}" BackgroundColor="#588157" TextColor="White"></Button>
+                    <Button Command="{Binding CambiarAGrupoCommand}" FontFamily="Verdana" Text="Mi Grupo" TextColor="WhiteSmoke" Padding="0,0,5,0" Background="#588157" VerticalOptions="Center" Margin="0,0,5,0"></Button>
+                    <Label IsVisible="{Binding MostrarGrupo}" TextColor="#3a5a40" Text="•" FontSize="Title" Margin="5,-5"></Label>
 
-                    <Button Grid.Column="1" Text="General" Command="{Binding CambiarAGeneralesCommand}" BackgroundColor="#588157" TextColor="White"></Button>
+                    <Button Command="{Binding CambiarAGeneralesCommand}" FontFamily="Verdana" Grid.Column="1" Margin="5,0,0,0" Text="General" TextColor="WhiteSmoke" Padding="0,0,5,0" Background="#588157" VerticalOptions="Center"></Button>
+                    <Label IsVisible="{Binding MostrarGenerales}" TextColor="#3a5a40" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
                 </Grid>
 
                 <CollectionView Margin="10" ItemsSource="{Binding Alumnos}" IsVisible="{Binding MostrarGrupo}">
