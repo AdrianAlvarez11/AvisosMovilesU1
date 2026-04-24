@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AvisosApp.Views.AlumnoAvisoPersonalDetallesView"
+             Title="" Background="#dad7cd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="auto, *">
+        <Button Text="← Regresar" Command="{Binding RegresarAlumnoCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
+
+        <Border Grid.Row="1" Margin="10" Padding="10">
+            <Grid RowDefinitions="auto,*,auto">
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                    <Label FontFamily="Verdana" Text="{Binding AvisoSeleccionado.Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                    <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding AvisoSeleccionado.NombreEstado}" BackgroundColor="#3a5a40" TextColor="White" FontSize="10" Padding="5,2" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                </Grid>
+                <ScrollView Grid.Row="1">
+                    <Label HorizontalTextAlignment="Justify" Margin="5,10" FontFamily="Verdana" Text="{Binding AvisoSeleccionado.Contenido}" FontSize="13" TextColor="Black" CharacterSpacing="2"></Label>
+                </ScrollView>
+                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowDefinitions=".1*,.1*" RowSpacing="10" Margin="0,10,0,0">
+                    <Label FontFamily="Verdana" Text="{Binding AvisoSeleccionado.NombreMaestro, StringFormat='Enviado por: {0}'}" FontSize="12" TextColor="Gray"></Label>
+                    <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding AvisoSeleccionado.FechaEnviado, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                    <Label FontFamily="Verdana" Grid.Row="1" Text="Leído:" FontSize="12" TextColor="Gray"></Label>
+                    <Label FontFamily="Verdana" Grid.Row="1" Grid.Column="1" Text="{Binding AvisoSeleccionado.FechaLeido, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -32,61 +32,69 @@ namespace AvisosAPI.Services
             this.configuration = configuration;
         }
 
-        public AlumnoLoginResponseDTO LoginAlumno(AlumnoLoginDTO dto)
+        public LoginResponseDTO Login(LoginDTO dto)
         {
-            var alumno = alumnoRepository.Query()
-                .Include(x => x.IdGrupoNavigation)
-                .FirstOrDefault(x => x.NumControl == dto.NumControl);
-
-            if (alumno == null || !EncriptacionHelper.VerifySHA512HashWithSalt(dto.Contrasena, alumno.Contrasena))
+            if (dto.NumControl.Length == 8)
             {
-                throw new UnauthorizedAccessException("Credenciales incorrectas.");
-            }
+                var alumno = alumnoRepository.Query()
+                    .Include(x => x.IdGrupoNavigation)
+                    .FirstOrDefault(x => x.NumControl == dto.NumControl);
 
-            var token = GenerarToken(alumno.Id, "Alumno");
-            var response = mapper.Map<AlumnoLoginResponseDTO>(alumno);
-            response.Token = token;
-            return response;
+                if (alumno == null || !EncriptacionHelper.VerifySHA512HashWithSalt(dto.Contrasena, alumno.Contrasena))
+                {
+                    throw new UnauthorizedAccessException("Credenciales incorrectas.");
+                }
+
+                var token = GenerarToken(alumno.Id, "Alumno", alumno.Nombre);
+                var response = mapper.Map<LoginResponseDTO>(alumno);
+                response.Token = token;
+                response.Rol = "Alumno";
+                return response;
+            }
+            else if (dto.NumControl.Length == 4)
+            {
+                var maestro = maestroRepository.Query()
+                    .Include(x => x.Grupo)
+                    .FirstOrDefault(x => x.NumControl == dto.NumControl);
+
+                if (maestro == null || !EncriptacionHelper.VerifySHA512HashWithSalt(dto.Contrasena, maestro.Contrasena))
+                {
+                    throw new UnauthorizedAccessException("Credenciales incorrectas.");
+                }
+
+                var token = GenerarToken(maestro.Id, "Maestro", maestro.Nombre);
+                var response = mapper.Map<LoginResponseDTO>(maestro);
+                response.Token = token;
+                response.Rol = "Maestro";
+                return response;
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("El número de control es inválido.");
+            }
         }
 
-        public MaestroLoginResponseDTO LoginMaestro(MaestroLoginDTO dto)
-        {
-            var maestro = maestroRepository.Query()
-                .Include(x => x.Grupo)
-                .FirstOrDefault(x => x.NumControl == dto.NumControl);
-
-            if (maestro == null || !EncriptacionHelper.VerifySHA512HashWithSalt(dto.Contrasena, maestro.Contrasena))
-            {
-                throw new UnauthorizedAccessException("Credenciales incorrectas.");
-            }
-
-            var token = GenerarToken(maestro.Id, "Maestro");
-            var response = mapper.Map<MaestroLoginResponseDTO>(maestro);
-            response.Token = token;
-            return response;
-        }
-
-        private string GenerarToken(int id, string rol)
+        private string GenerarToken(int id, string rol, string Nombre)
         {
             var claims = new[]
             {
                 new Claim("Id", id.ToString()),
-                new Claim(ClaimTypes.Role, rol)
+                new Claim(ClaimTypes.Role, rol),
+                new Claim(ClaimTypes.Name, Nombre),
             };
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
+            var key = configuration.GetValue<string>("Jwt:Key");
 
-            var credenciales = new SigningCredentials(
-                key, SecurityAlgorithms.HmacSha256);
 
-            var expiracion = DateTime.UtcNow.AddHours(
-                double.Parse(configuration["Jwt:ExpirationHours"]!));
+            
 
             var token = new JwtSecurityToken(
+                issuer: configuration.GetValue<string>("Jwt:Issuer"),
+                audience: configuration.GetValue<string>("Jwt:Audience"),
                 claims: claims,
-                expires: expiracion,
-                signingCredentials: credenciales);
+                expires: DateTime.UtcNow.AddMinutes(30),
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key ?? "")), SecurityAlgorithms.HmacSha256)
+);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

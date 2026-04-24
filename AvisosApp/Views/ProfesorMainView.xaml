@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:AvisosApp.ViewModels"
+             x:Class="AvisosApp.Views.ProfesorMainView"
+             Title="" Background="#dad7cd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--<Grid RowDefinitions="auto, *" Margin="0,0,0,10">
+        <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Desarrollo de Aps. Mov. " FontSize="20"/>
+            <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="25 Alumnos" FontSize="20" HorizontalOptions="End"/>
+
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <Grid RowDefinitions="*,*" ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
+                    <Border Background="#588157" Stroke="AliceBlue">
+                        <Button FontFamily="Verdana" Text="Mi Grupo" TextColor="WhiteSmoke" CornerRadius="0" 
+                        Background="Transparent" VerticalOptions="Center" Margin="0"></Button>
+                    </Border>
+                    <Border  Grid.Column="1" Background="#588157" Stroke="Black">
+                        <Button FontFamily="Verdana" Margin="0,0,0,0" Text="General" CornerRadius="0" TextColor="WhiteSmoke"
+                                Background="Transparent" VerticalOptions="Center"></Button>
+                    </Border>
+                    <Border  Grid.Row="1" Grid.Column="1" Background="#344e41" HorizontalOptions="End" WidthRequest="50" Margin="0,10,0,0" Stroke="Black">
+                        <Button FontFamily="Verdana" Margin="0,0,0,0" Text="+" CornerRadius="0" TextColor="WhiteSmoke"
+                                Background="Transparent" VerticalOptions="Center"></Button>
+                    </Border>
+                </Grid>
+                -->
+    <!--<Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center"></Label>-->
+    <!--poner aqui la plantilla de los avisos generales y una manera de identificar 
+                    si son nuevos, no leidos o leidos.
+                    
+                    buscar si con un trigger se puede hacer que dependiendo la vista cambie la plantilla
+                    o no realmente solo que en una habria que mostrar una cosa y en otra otra.-->
+
+
+    <!--El border es una plantilla para un collectionview.-->
+
+    <!--primer tab en mi grupo aparecen los alumnos-->
+    <!--
+                <Border Margin="10,10,10,0" Padding="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontSize="16" TextColor="Black"></Label>
+                        </Grid>
+                </Border>
+                <Border Margin="10,10,10,0" Padding="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label FontFamily="Verdana" Text="Adrian Alvarez" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        <Label FontFamily="Verdana" Grid.Column="1" Text="221G0982" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                    </Grid>
+                </Border>
+
+                
+                -->
+    <!--segundo tab en general aparecen los avisos generales-->
+    <!--
+                <Border  Margin="10,10,10,0" Padding="10">
+                    <VerticalStackLayout>
+                            <Label Margin="0,0,0,10" HorizontalOptions="Center" FontFamily="Verdana" Text="Titulo del aviso" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label FontFamily="Verdana" Text="Enviado por: Adrian Alvarez" FontSize="12" TextColor="Gray"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="12/04/2026" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label FontFamily="Verdana" Text="Expira:" FontSize="12" TextColor="Gray"></Label>
+                            <Label FontFamily="Verdana" Grid.Column="1" Text="30/04/2026" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>-->
+
+
+    <Grid RowDefinitions="auto,auto, *" Margin="0,0,0,10">
+
+        <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+            <Label Margin="10,10,10,0" Text="{Binding Grupo.Nombre}" FontAttributes="Bold" TextColor="Black" FontSize="20"></Label>
+
+            <Label Grid.Column="1" Margin="10,10,10,0"
+                   Text="{Binding Alumnos.Count, StringFormat='{0} Alumnos'}" FontAttributes="Bold" TextColor="Black" FontSize="20"></Label>
+        </Grid>
+        
+        <Button Text="Crear Alumno" Command="{Binding IrRegistrarAlumnoCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
+            FontSize="18" WidthRequest="150" CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
+            Margin="10" IsVisible="{Binding MostrarGrupo}"></Button>
+        <Button Text="Crear Aviso General" Command="{Binding IrCrearAvisoGeneralCommand}" Grid.RowSpan="3" BackgroundColor="#344e41" TextColor="White"
+            FontSize="18" WidthRequest="200"  CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
+            Margin="10" IsVisible="{Binding MostrarGenerales}"></Button>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+
+                <Grid ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
+
+                    <Button Command="{Binding CambiarAGrupoCommand}" FontFamily="Verdana" Text="Mi Grupo" TextColor="WhiteSmoke" Padding="0,0,5,0" Background="#588157" VerticalOptions="Center" Margin="0,0,5,0"></Button>
+                    <Label IsVisible="{Binding MostrarGrupo}" TextColor="#3a5a40" Text="•" FontSize="Title" Margin="5,-5"></Label>
+
+                    <Button Command="{Binding CambiarAGeneralesCommand}" FontFamily="Verdana" Grid.Column="1" Margin="5,0,0,0" Text="General" TextColor="WhiteSmoke" Padding="0,0,5,0" Background="#588157" VerticalOptions="Center"></Button>
+                    <Label IsVisible="{Binding MostrarGenerales}" TextColor="#3a5a40" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
+                </Grid>
+
+                <CollectionView Margin="10" ItemsSource="{Binding Alumnos}" IsVisible="{Binding MostrarGrupo}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="10">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAlumnoCommand}"
+                                        CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="*,Auto">
+
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" TextColor="Black"></Label>
+
+                                    <Label Grid.Column="1" Text="{Binding NumControl}" TextColor="Black"></Label>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <CollectionView Margin="10" ItemsSource="{Binding AvisosGenerales}" IsVisible="{Binding MostrarGenerales}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAvisosGeneralesCommand}" CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Margin="10,0,10,10">
+
+                                    <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" TextColor="Black"></Label>
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding NombreMaestro, StringFormat='Enviado por: {0}'}" FontSize="12" TextColor="Gray"></Label>
+
+                                        <Label Grid.Column="1" Text="{Binding FechaEnviado, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray"></Label>
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="Expira:" FontSize="12" TextColor="Gray"/>
+
+                                        <Label Grid.Column="1" Text="{Binding FechaExpira, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray"></Label>
+                                    </Grid>
+
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

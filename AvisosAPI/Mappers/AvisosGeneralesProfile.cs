@@ -17,7 +17,12 @@ namespace AvisosAPI.Mappers
                 .ForMember(dest => dest.IdEstado, opt => opt.MapFrom(src => src.IdEstado))
                 .ForMember(dest => dest.NombreEstado, opt => opt.MapFrom(src => src.IdEstadoNavigation.Nombre));
 
-      
+            CreateMap<Avisogeneral, AvisoGeneralResumenDTO>()
+                .ForMember(dest => dest.NombreMaestro, opt => opt.MapFrom(src => src.IdMaestroNavigation.Nombre))
+                .ForMember(dest => dest.IdEstado, opt => opt.Ignore())
+                .ForMember(dest => dest.NombreEstado, opt => opt.Ignore());
+
+
             CreateMap<Avisogeneral, AvisoGeneralDetalleAlumnoDTO>()
                 .ForMember(dest => dest.NombreMaestro,
                     opt => opt.MapFrom(src => src.IdMaestroNavigation.Nombre));

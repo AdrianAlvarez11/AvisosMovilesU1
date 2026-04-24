@@ -1,4 +1,4 @@
-﻿namespace AvisosAPI.Models.DTOs
+﻿namespace AvisosApp.Models.DTOs
 {
     // Para la lista — sin Contenido para que cargue rápido
     public class AvisoPersonalResumenDTO

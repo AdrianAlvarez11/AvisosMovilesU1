@@ -11,46 +11,23 @@ namespace AvisosAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthService service;
-        private readonly IValidator<AlumnoLoginDTO> alumnoValidator;
-        private readonly IValidator<MaestroLoginDTO> maestroValidator;
+        private readonly IValidator<LoginDTO> loginValidator;
 
-        public AuthController(AuthService service, IValidator<AlumnoLoginDTO> alumnoValidator, IValidator<MaestroLoginDTO> maestroValidator)
+        public AuthController(AuthService service, IValidator<LoginDTO> loginValidator)
         {
             this.service = service;
-            this.alumnoValidator = alumnoValidator;
-            this.maestroValidator = maestroValidator;
+            this.loginValidator = loginValidator;
         }
 
-        [HttpPost("alumno")]
-        public IActionResult LoginAlumno(AlumnoLoginDTO dto)
+        [HttpPost]
+        public IActionResult Login(LoginDTO dto)
         {
-            var result = alumnoValidator.Validate(dto);
+            var result = loginValidator.Validate(dto);
             if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
 
             try
             {
-                var response = service.LoginAlumno(dto);
-                return Ok(response);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("maestro")]
-        public IActionResult LoginMaestro(MaestroLoginDTO dto)
-        {
-            var result = maestroValidator.Validate(dto);
-            if (!result.IsValid) return BadRequest(result.Errors.Select(x => x.ErrorMessage));
-
-            try
-            {
-                var response = service.LoginMaestro(dto);
+                var response = service.Login(dto);
                 return Ok(response);
             }
             catch (UnauthorizedAccessException ex)

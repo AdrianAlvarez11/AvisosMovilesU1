@@ -31,7 +31,7 @@ namespace AvisosAPI.Services
             var idMaestro = ObtenerIdDesdeToken();
 
             var grupo = grupoRepository.Query()
-                .Include(x => x.Alumno)
+                .Include(x => x.Alumno.Where(c=>c.Eliminado == false))
                 .FirstOrDefault(x => x.IdMaestro == idMaestro);
 
             if (grupo == null)
@@ -54,9 +54,9 @@ namespace AvisosAPI.Services
 
             var alumno = alumnoRepository.Query()
                 .Include(x => x.IdGrupoNavigation)
-                .Include(x => x.Avisopersonal)
+                .Include(x => x.Avisopersonal.Where(x=>x.Eliminado == false))
                     .ThenInclude(x => x.IdMaestroNavigation)
-                .Include(x => x.Avisopersonal)
+                .Include(x => x.Avisopersonal.Where(x=>x.Eliminado == false))
                     .ThenInclude(x => x.IdEstadoNavigation)
                 .FirstOrDefault(x => x.Id == idAlumno && x.IdGrupo == grupo.Id && x.Eliminado == false);
 

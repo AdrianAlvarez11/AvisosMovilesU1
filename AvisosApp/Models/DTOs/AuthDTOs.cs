@@ -1,4 +1,4 @@
-﻿namespace AvisosAPI.Models.DTOs
+﻿namespace AvisosApp.Models.DTOs
 {
     public class AuthDTOs
     {

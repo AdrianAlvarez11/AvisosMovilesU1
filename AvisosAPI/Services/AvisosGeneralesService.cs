@@ -57,6 +57,29 @@ namespace AvisosAPI.Services
             return avisosMapeados;
         }
 
+        //lista de resumen para maestro
+        public List<AvisoGeneralResumenDTO> GetVigentesMaestro()
+        {
+            var idMaestro = ObtenerIdDesdeToken();
+
+            var avisos = avisoRepository.Query()
+                .Include(x => x.IdMaestroNavigation)
+                .Where(x => x.FechaExpira > DateTime.Now 
+                         && x.Eliminado == false)
+                .OrderByDescending(x => x.FechaEnviado)
+                .ToList();
+
+            var avisosMapeados = avisos.Select(x => mapper.Map<AvisoGeneralResumenDTO>(x)).ToList();
+
+            foreach (var a in avisosMapeados)
+            {
+                a.IdEstado = 0;
+                a.NombreEstado = "";
+            }
+
+            return avisosMapeados;
+        }
+
 
         // ver detalle y registrar lectura (alumno)
         public AvisoGeneralDetalleAlumnoDTO GetDetalleAlumno(int idAviso)
@@ -109,7 +132,6 @@ namespace AvisosAPI.Services
             var aviso = avisoRepository.Query()
                 .Include(x => x.IdMaestroNavigation)
                 .FirstOrDefault(x => x.Id == idAviso
-                                  && x.IdMaestro == idMaestro
                                   && x.Eliminado == false);
 
             if (aviso == null)
@@ -123,6 +145,7 @@ namespace AvisosAPI.Services
                 .ToList();
 
             var resultado = mapper.Map<AvisoGeneralDetalleMaestroDTO>(aviso);
+            resultado.EsProfesor = aviso.IdMaestro == idMaestro;
 
             // Separar en dos listas según el estado
             resultado.PendientesLectura = lecturas

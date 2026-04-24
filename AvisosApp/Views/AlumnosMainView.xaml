@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AvisosApp.Views.AlumnosMainView"
+             Title="" Background="#dad7cd">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refrescar" Order="Secondary" Command="{Binding RefrescarAvisosAlumnoCommand}" />
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="auto, *">
+        <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding NombreUsuario}" FontSize="20"/>
+            <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding GrupoUsuario}" FontSize="20" HorizontalOptions="End"/>
+
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <Grid ColumnDefinitions=".1*, .1*" Margin="10, 10, 10, 0" >
+                    <Button Command="{Binding CambiarAGeneralesAlumnoCommand}" FontFamily="Verdana" Text="Generales" TextColor="WhiteSmoke" Padding="0,0,5,0"
+                    Background="#588157" VerticalOptions="Center" Margin="0,0,5,0"></Button>
+                    <Label IsVisible="{Binding MostrarAvisosGeneralesAlumno}" TextColor="#3a5a40" Text="•" FontSize="Title" Margin="5,-5"></Label>
+                    <Button Command="{Binding CambiarAPersonalesAlumnoCommand}" FontFamily="Verdana" Grid.Column="1" Margin="5,0,0,0" Text="Personales" TextColor="WhiteSmoke" Padding="0,0,5,0"
+                    Background="#588157"  VerticalOptions="Center"></Button>
+                    <Label IsVisible="{Binding MostrarAvisosPersonalesAlumno}" TextColor="#3a5a40" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
+                </Grid>
+                <Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center"></Label>
+                
+                <CollectionView IsVisible="{Binding MostrarAvisosGeneralesAlumno}" ItemsSource="{Binding AvisosGenerales}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="10,10,10,0" Padding="10">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.VerAvisosGeneralesAlumnoCommand}" CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label FontFamily="Verdana" Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                                        <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding NombreEstado}" BackgroundColor="#3a5a40" TextColor="White" FontSize="10" Padding="5,2" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label FontFamily="Verdana" Text="{Binding NombreMaestro, StringFormat='Enviado por: {0}'}" FontSize="12" TextColor="Gray"></Label>
+                                        <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding FechaEnviado, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <CollectionView IsVisible="{Binding MostrarAvisosPersonalesAlumno}" ItemsSource="{Binding Avisos}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="10,10,10,0" Padding="10">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.VerAvisosPersonalesCommand}" CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label FontFamily="Verdana" Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
+                                        <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding NombreEstado}" BackgroundColor="#3a5a40" TextColor="White" FontSize="10" Padding="5,2" HorizontalOptions="End" VerticalOptions="Start"></Label>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label FontFamily="Verdana" Text="{Binding NombreMaestro, StringFormat='Enviado por: {0}'}" FontSize="12" TextColor="Gray"></Label>
+                                        <Label FontFamily="Verdana" Grid.Column="1" Text="{Binding FechaEnviado, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray" HorizontalOptions="End"></Label>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

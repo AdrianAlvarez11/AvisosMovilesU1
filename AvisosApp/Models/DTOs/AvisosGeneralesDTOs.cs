@@ -1,4 +1,4 @@
-﻿namespace AvisosAPI.Models.DTOs
+﻿namespace AvisosApp.Models.DTOs
 {
     // la lista del alumno
     public class AvisoGeneralResumenDTO
@@ -8,8 +8,8 @@
         public string NombreMaestro { get; set; } = null!;
         public DateTime FechaEnviado { get; set; }
         public DateTime FechaExpira { get; set; }
-        public int? IdEstado { get; set; }
-        public string? NombreEstado { get; set; }
+        public int IdEstado { get; set; }
+        public string NombreEstado { get; set; } = null!;
 
     }
 
@@ -58,7 +58,7 @@
     {
         public string Titulo { get; set; } = null!;
         public string Contenido { get; set; } = null!;
-        public DateTime FechaExpira { get; set; }
+        public DateTime FechaExpira { get; set; } = DateTime.Today;
     }
 
 }
