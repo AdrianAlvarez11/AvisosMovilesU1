@@ -35,6 +35,8 @@
         public int IdMaestro { get; set; } //para que el maestro pueda eliminar
         public DateTime FechaEnviado { get; set; }
         public DateTime FechaExpira { get; set; }
+        public bool EsProfesor { get; set; }
+
 
         // Alumnos con estado Nuevo o Recibido aún no lo leen
         public List<AlumnoLecturaDTO> PendientesLectura { get; set; } = new();
@@ -58,4 +60,5 @@
         public string Contenido { get; set; } = null!;
         public DateTime FechaExpira { get; set; }
     }
+
 }

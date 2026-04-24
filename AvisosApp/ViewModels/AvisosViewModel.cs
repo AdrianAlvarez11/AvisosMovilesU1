@@ -379,6 +379,8 @@ namespace AvisosApp.ViewModels
         public ICommand VerAlumnoCommand { get; set; }
         public ICommand EliminarAlumnoCommand { get; set; }
 
+        //propiedad para controlar el eliminar de avisos generales
+
         private async void CargarGrupo()
         {
 
@@ -401,7 +403,7 @@ namespace AvisosApp.ViewModels
             {  
                 AlumnoSeleccionado = alumno;
                 PropertyChanged?.Invoke(this, new(nameof(AlumnoSeleccionado)));
-                await Shell.Current.GoToAsync("///detallesalumnos");
+                await Shell.Current.GoToAsync("detallesalumnos");
 
             }
         }
@@ -557,10 +559,13 @@ namespace AvisosApp.ViewModels
         private async void VerDetalleAvisosGenerales(int id)
         {
             var aviso = await service.GetDetalleMaestro(id);
+            
             if (aviso != null)
             {
                 SeleccionadoGeneral = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(SeleccionadoGeneral)));
+
+                PropiedadDelProfesor = aviso.EsProfesor;
 
                 HayLeidosGenerales = aviso.Leidos != null && aviso.Leidos.Count > 0;
                 HayPendientesGenerales = aviso.PendientesLectura != null && aviso.PendientesLectura.Count > 0;

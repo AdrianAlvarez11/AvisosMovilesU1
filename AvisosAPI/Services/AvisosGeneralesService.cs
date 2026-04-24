@@ -145,6 +145,7 @@ namespace AvisosAPI.Services
                 .ToList();
 
             var resultado = mapper.Map<AvisoGeneralDetalleMaestroDTO>(aviso);
+            resultado.EsProfesor = aviso.IdMaestro == idMaestro;
 
             // Separar en dos listas según el estado
             resultado.PendientesLectura = lecturas
