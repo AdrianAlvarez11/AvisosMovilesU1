@@ -12,6 +12,7 @@ namespace AvisosApp
             Routing.RegisterRoute("crearavisogeneral", typeof(ProfesorCrearAvisoGeneralView));
             Routing.RegisterRoute("crearavisopersonal", typeof(ProfesorCrearAvisoPersonalView));
             Routing.RegisterRoute("detallesalumnos", typeof(ProfesorDetallesAlumnosView));
+            Routing.RegisterRoute("detalleavisopersonal", typeof(ProfesorDetalleAvisoPersonalView));
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

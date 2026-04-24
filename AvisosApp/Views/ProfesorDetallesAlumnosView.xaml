@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:AvisosApp.ViewModels"
              x:Class="AvisosApp.Views.ProfesorDetallesAlumnosView"
              Title="ProfesorDetallesAlumnosView" Background="#dad7cd">
     <ContentPage.ToolbarItems>
@@ -9,21 +9,27 @@
     <Grid RowDefinitions="auto,auto, *">
         <Button Text="← Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
 
-        <Grid Grid.Row="1" ColumnDefinitions="*, auto" Margin="0,0,0,10">
-            <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.Nombre}" FontSize="20"/>
-            <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.NumControl}" FontSize="20" HorizontalOptions="End"/>
-
-        </Grid>
-        <Button Text="Crear Aviso Personal" Command="{Binding IrCrearAvisoPersonalCommand}" Grid.RowSpan="2" ZIndex="10" BackgroundColor="BlueViolet" TextColor="White"
+        <Border Margin="10" Padding="5" Grid.Row="1">
+            
+            <Grid ColumnDefinitions="*, auto" Margin="0,0,0,10">
+                <Label Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.Nombre}" FontSize="20"/>
+                <Label Grid.Column="1" Margin="10, 10, 10, 0" FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="{Binding AlumnoSeleccionado.NumControl}" FontSize="20" HorizontalOptions="End"/>
+            </Grid>
+        </Border>
+        <Button Text="Crear Aviso Personal" Command="{Binding IrCrearAvisoPersonalCommand}" Grid.RowSpan="3" ZIndex="10" BackgroundColor="BlueViolet" TextColor="White"
             FontSize="18" WidthRequest="210"  CornerRadius="20" HorizontalOptions="End" VerticalOptions="End"
             Margin="10"></Button>
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="2">
             <VerticalStackLayout>
                 <CollectionView Margin="10" ItemsSource="{Binding AlumnoSeleccionado.Avisos}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
                             <Border Margin="10" Padding="10" >
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AvisosViewModel}}, Path=VerAvisosPersonalesCommand}"
+                                        CommandParameter="{Binding Id}" />
+                                </Border.GestureRecognizers>
                                 <Grid RowDefinitions="auto,.1*,auto">
                                     <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
                                         <Label FontFamily="Verdana" Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>

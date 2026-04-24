@@ -104,6 +104,7 @@ namespace AvisosApp.ViewModels
             }
         }
 
+
         public bool MostrarGenerales => !MostrarGrupo;
 
         // Propiedades para Alumno
@@ -120,6 +121,26 @@ namespace AvisosApp.ViewModels
         }
         public bool MostrarAvisosPersonalesAlumno => !MostrarAvisosGeneralesAlumno;
 
+        private bool hayLeidosGenerales = false;
+        public bool HayLeidosGenerales
+        {
+            get => hayLeidosGenerales;
+            set
+            {
+                hayLeidosGenerales = value;
+                PropertyChanged?.Invoke(this, new(nameof(HayLeidosGenerales)));
+            }
+        }
+        private bool hayPendientesGenerales = false;
+        public bool HayPendientesGenerales
+        {
+            get => hayPendientesGenerales;
+            set
+            {
+                hayPendientesGenerales = value;
+                PropertyChanged?.Invoke(this, new(nameof(HayPendientesGenerales)));
+            }
+        }
         public ICommand CambiarAGeneralesAlumnoCommand { get; set; }
         public ICommand CambiarAPersonalesAlumnoCommand { get; set; }
 
@@ -405,7 +426,7 @@ namespace AvisosApp.ViewModels
                 AvisoSeleccionado = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(AvisoSeleccionado)));
 
-                await Shell.Current.GoToAsync("//detalleavisopersonal");
+                await Shell.Current.GoToAsync("detalleavisopersonal");
             }
         }
 
@@ -480,6 +501,9 @@ namespace AvisosApp.ViewModels
             {
                 SeleccionadoGeneral = aviso;
                 PropertyChanged?.Invoke(this, new(nameof(SeleccionadoGeneral)));
+
+                HayLeidosGenerales = aviso.Leidos != null && aviso.Leidos.Count > 0;
+                HayPendientesGenerales = aviso.PendientesLectura != null && aviso.PendientesLectura.Count > 0;
 
                 await Shell.Current.GoToAsync("//detalleavisogeneral");
             }

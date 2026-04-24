@@ -96,6 +96,9 @@
 	  <MauiXaml Update="Views\ProfesorDetalleAvisoGeneralView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfesorDetalleAvisoPersonalView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfesorDetallesAlumnosView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

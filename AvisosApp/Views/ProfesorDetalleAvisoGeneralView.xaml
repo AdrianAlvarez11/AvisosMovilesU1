@@ -6,7 +6,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
-    <Grid RowDefinitions="auto, *">
+    <Grid RowDefinitions="auto, auto, *">
         <Button Text="← Regresar" Command="{Binding RegresarMaestroCommand}" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" FontFamily="Verdana" FontAttributes="Bold" Margin="10,10,0,0"/>
 
         <Border Grid.Row="1" Margin="10" Padding="10">
@@ -15,7 +15,7 @@
                     <Label FontFamily="Verdana" Text="{Binding SeleccionadoGeneral.Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
                 </Grid>
                 <ScrollView Grid.Row="1">
-                    <Label HorizontalTextAlignment="Justify" Margin="5,10" FontFamily="Verdana" Text="{Binding SeleccionadoGeneral.Contenido}" FontSize="13" TextColor="Black" CharacterSpacing="2"></Label>
+                    <Label HorizontalTextAlignment="Justify" FontFamily="Verdana" Text="{Binding SeleccionadoGeneral.Contenido}" FontSize="13" TextColor="Black" CharacterSpacing="2"></Label>
                 </ScrollView>
                 <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowDefinitions=".1*,.1*" RowSpacing="10" Margin="0,10,0,0">
                     <Label FontFamily="Verdana" Text="Fecha de Creación:" FontSize="12" TextColor="Gray"></Label>
@@ -25,5 +25,37 @@
                 </Grid>
             </Grid>
         </Border>
+        <ScrollView Grid.Row="2" Margin="10">
+            <VerticalStackLayout>
+                <Label FontFamily="Verdana" Text="Alumnos que han leído:" FontAttributes="Bold" FontSize="14" TextColor="Black" IsVisible="{Binding HayLeidosGenerales}"></Label>
+
+                <CollectionView ItemsSource="{Binding SeleccionadoGeneral.Leidos}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" TextColor="Black"></Label>
+                                    <Label Grid.Column="1" Text="{Binding NumControl}" TextColor="Black"></Label>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label FontFamily="Verdana" Text="Alumnos pendientes de lectura:" FontAttributes="Bold" FontSize="14" TextColor="Black" IsVisible="{Binding HayPendientesGenerales}"></Label>
+
+                <CollectionView ItemsSource="{Binding SeleccionadoGeneral.PendientesLectura}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" TextColor="Black"></Label>
+                                    <Label Grid.Column="1" Text="{Binding NumControl}" TextColor="Black"></Label>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

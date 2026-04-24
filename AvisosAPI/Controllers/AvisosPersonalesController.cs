@@ -45,7 +45,7 @@ namespace AvisosAPI.Controllers
         // GET api/avisospersonales/5
         // Alumno: abre un aviso — marca como leído automáticamente
         [HttpGet("{idAviso}")]
-        [Authorize(Roles = "Alumno")]
+        [Authorize(Roles = "Alumno,Maestro")]
         public IActionResult GetDetalle(int idAviso)
         {
             try
