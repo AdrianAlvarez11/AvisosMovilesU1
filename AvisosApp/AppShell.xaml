@@ -6,6 +6,8 @@
     xmlns:local="clr-namespace:AvisosApp"
     xmlns:views="clr-namespace:AvisosApp.Views"
     xmlns:viewmodels="clr-namespace:AvisosApp.ViewModels"
+    Shell.BackgroundColor="#344e41"
+    Shell.ForegroundColor="White"
     Title="AvisosApp">
 
     <Shell.BindingContext>

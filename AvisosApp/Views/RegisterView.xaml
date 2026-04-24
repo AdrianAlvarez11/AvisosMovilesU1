@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AvisosApp.Views.RegisterView"
-             Title="RegisterView" Background="#dad7cd">
+             Title="" Background="#dad7cd">
     <VerticalStackLayout VerticalOptions="Center">
         <Label FontFamily="Verdana" FontAttributes="Bold" TextColor="Black" Text="Registrar" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,50" />
         <Entry FontFamily="Verdana" Text="{Binding Maestro.Nombre}" Placeholder="Nombre" Background="#a3b18a"  Margin="10, 10, 10, 0"></Entry>

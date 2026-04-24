@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AvisosApp.Views.AlumnoAvisoDetallesView"
-             Title="AlumnoAvisoDetallesView" Background="#dad7cd">
+             Title="" Background="#dad7cd">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
