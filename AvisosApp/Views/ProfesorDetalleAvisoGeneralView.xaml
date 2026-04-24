@@ -13,7 +13,7 @@
             <Grid RowDefinitions="auto,*,auto">
                 <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
                     <Label FontFamily="Verdana" Text="{Binding SeleccionadoGeneral.Titulo}" FontAttributes="Bold" FontSize="16" TextColor="Black"></Label>
-                    <Button FontFamily="Verdana" Grid.Column="1" Text="Eliminar" BackgroundColor="#3a5a40" TextColor="White" FontSize="12" HorizontalOptions="End" Command="{Binding EliminarAvisosGeneralesCommand}" CommandParameter="{Binding SeleccionadoGeneral.Id}"></Button>
+                    <Button FontFamily="Verdana" Grid.Column="1" Text="Eliminar" BackgroundColor="#3a5a40" TextColor="White" FontSize="12" HorizontalOptions="End" Command="{Binding EliminarAvisosGeneralesCommand}" CommandParameter="{Binding SeleccionadoGeneral.Id}" IsVisible="{Binding PropiedadDelProfesor}"></Button>
                 </Grid>
                 <ScrollView Grid.Row="1">
                     <Label HorizontalTextAlignment="Justify" FontFamily="Verdana" Text="{Binding SeleccionadoGeneral.Contenido}" FontSize="13" TextColor="Black" CharacterSpacing="2"></Label>

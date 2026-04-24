@@ -141,6 +141,18 @@ namespace AvisosApp.ViewModels
                 PropertyChanged?.Invoke(this, new(nameof(HayPendientesGenerales)));
             }
         }
+        private bool propiedadDelProfesor = false;
+        public bool PropiedadDelProfesor
+        {
+            get => propiedadDelProfesor;
+            set
+            {
+                propiedadDelProfesor = value;
+                PropertyChanged?.Invoke(this, new(nameof(PropiedadDelProfesor)));
+            }
+        }
+
+        
         public ICommand CambiarAGeneralesAlumnoCommand { get; set; }
         public ICommand CambiarAPersonalesAlumnoCommand { get; set; }
         public ICommand RefrescarAvisosAlumnoCommand { get; set; }
