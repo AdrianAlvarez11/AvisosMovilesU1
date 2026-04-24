@@ -128,9 +128,25 @@ namespace AvisosApp.ViewModels
                 mostrarAvisosGeneralesAlumno = value;
                 PropertyChanged?.Invoke(this, new(nameof(MostrarAvisosGeneralesAlumno)));
                 PropertyChanged?.Invoke(this, new(nameof(MostrarAvisosPersonalesAlumno)));
+                PropertyChanged?.Invoke(this, new(nameof(HayMensajesNuevos)));
             }
         }
         public bool MostrarAvisosPersonalesAlumno => !MostrarAvisosGeneralesAlumno;
+
+        public bool HayMensajesNuevos
+        {
+            get
+            {
+                if (MostrarAvisosGeneralesAlumno)
+                {
+                    return AvisosGenerales != null && AvisosGenerales.Any(a => a.NombreEstado != null && a.NombreEstado.Equals("Nuevo", StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    return Avisos != null && Avisos.Any(a => a.NombreEstado != null && a.NombreEstado.Equals("Nuevo", StringComparison.OrdinalIgnoreCase));
+                }
+            }
+        }
 
         private bool hayLeidosGenerales = false;
         public bool HayLeidosGenerales
@@ -464,7 +480,7 @@ namespace AvisosApp.ViewModels
 
             Avisos.Clear();
             avisosPersonales.ForEach(Avisos.Add);
-
+            PropertyChanged?.Invoke(this, new(nameof(HayMensajesNuevos)));
         }
 
         private async void VerDetalleAvisosPersonales(int id)
@@ -547,6 +563,7 @@ namespace AvisosApp.ViewModels
 
             AvisosGenerales.Clear();
             avisosGenerales.ForEach(AvisosGenerales.Add);
+            PropertyChanged?.Invoke(this, new(nameof(HayMensajesNuevos)));
         }
 
         private async void CargarAvisosGenerales()

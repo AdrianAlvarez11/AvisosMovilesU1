@@ -24,7 +24,7 @@
                     Background="#588157"  VerticalOptions="Center"></Button>
                     <Label IsVisible="{Binding MostrarAvisosPersonalesAlumno}" TextColor="#3a5a40" Grid.Column="1" Text="•" FontSize="Title" Margin="10,-5"></Label>
                 </Grid>
-                <Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center"></Label>
+                <Label Margin="10" FontFamily="Verdana" TextColor="Black" Text="Tienes mensajes nuevos y sin leer" HorizontalTextAlignment="Center" IsVisible="{Binding HayMensajesNuevos}"></Label>
                 
                 <CollectionView IsVisible="{Binding MostrarAvisosGeneralesAlumno}" ItemsSource="{Binding AvisosGenerales}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
@@ -74,3 +74,4 @@
         </ScrollView>
     </Grid>
 </ContentPage>
+
